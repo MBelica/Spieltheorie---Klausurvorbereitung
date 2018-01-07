@@ -190,7 +190,7 @@ Betrachten Sie das folgende in Extensivform beschriebene Spiel mit zwei Spielern
 			
 			\textit{Hier bin ich mir nicht sicher, ob man nur in reinen Strategien untersuchen sollte.} Tipp: die Suche nach Nash-Gleichgewichten in gemischten Strategien für drei Strategien ist schwierig und dauert lang. Oft Mals kann man allerdings eine der drei Strategien vorab ausschließen. ~\smallskip
 			
-			Da $M$ strikt dominiert ist durch $R$, folgt analog wie in Aufgabe 1, dass $M$ in keinem Gleichgewicht vorkommen kann. Angenommmen P1 spielt mit Wahrscheinlichkeit $p \in (0, 1)$ die Strategie $L$ und mit $(1-p)$ die Strategie $R$. Für ein Nash-Gleichgewicht müsste der erwartete Nutzen für P2 ausgeglichen sein, d.h.
+			Da $M$ strikt dominiert ist durch $R$, folgt analog wie in Aufgabe 1 c), dass $M$ in keinem Gleichgewicht vorkommen kann. Angenommen P1 spielt mit Wahrscheinlichkeit $p \in (0, 1)$ die Strategie $L$ und mit $(1-p)$ die Strategie $R$. Für ein Nash-Gleichgewicht müsste der erwartete Nutzen für P2 ausgeglichen sein, d.h.
 			\begin{align*}
 				\mathbb{E}[u(A)] & \overset{!}{=} \mathbb{E}[u(F)] \\
 				\iff 1 \cdot p +  3 \cdot (1-p) & = 0 \cdot p + 3 \cdot (1-p) \iff p = 0,
@@ -205,7 +205,7 @@ Betrachten Sie das folgende in Extensivform beschriebene Spiel mit zwei Spielern
 		\end{proof}
 	\item Ist die Strategie \enquote{F} des Spielers 2 sequentiell rational? Begründen Sie kurz Ihre Antwort. (5P)
 		\begin{proof}
-			Die Strategie $F$ ist nicht sequentiell rational. Hier ist es ganz gleich, welche Einschätzung (Beliefs) P2 in seiner Informationsmenge hat, es ist immer besser, $A$ als $F$ zu spielen. ~\smallskip
+			Die Strategie $F$ ist nicht sequentiell rational. Hier ist es ganz gleich, welche Einschätzung (Beliefs) P2 in seiner Informationsmenge hat, es ist immer besser $A$ als $F$ zu spielen. ~\smallskip
 			
 			Mal nebenbei soll bemerkt sein, dass $M$ dominiert ist, also nach den Einschätzungen von P2 nicht gespielt wird. Im sequentiellen Spiel, wird $P2$ also auch deswegen stets $A$ spielen wollen. ~\smallskip
 		\end{proof}
@@ -241,7 +241,9 @@ Das folgende statische Spiel wird wiederholt gespielt. Es wird angenommen, dass 
 
 	\item Geben Sie alle Teilspielperfekten Nash-Gleichgewichte des Gesamtspiels an, wenn das statische Spiel endlich oft nacheinander gespielt wird und die Auszahlung des Gesamtspiels der Summe der Auszahlungen in jede Stufe entspricht. Begründen Sie kurz Ihre Antwort (5P)
 		\begin{proof}
-			Allgemein beginnt man bei endlichen Spielen von hinten und betrachtet das letzte Teilspiel und arbeitet sich nach vorne durch (man untersucht beim letzten die beste Strategie, dann als Folge unter Beachtung der Auszahlung beim letzten betrachtet man das vorletzte Teilspiel, usw.). Da hier $M$ bzw. $F$ strikt dominante Strategien sind, werden beide Spiele unabhängig von der Strategie des anderen in jedem der endlich vielen Teilspiele jeweils diese Strategien spielen, und dies ist auch unabhängig von den restlichen Teilspielen. Das einzig mögliche Teilspielperfekte Nash-Gleichgewicht ist also
+			Allgemein beginnt man bei endlichen Spielen von hinten und betrachtet das letzte Teilspiel und arbeitet sich nach vorne durch (man untersucht beim letzten die beste Strategie, dann als Folge unter Beachtung der Auszahlung beim letzten betrachtet man das vorletzte Teilspiel, usw.). ~\smallskip
+			
+			Da hier $M$ bzw. $F$ strikt dominante Strategien sind, werden beide Spiele unabhängig von der Strategie des anderen in jedem der endlich vielen Teilspiele jeweils diese Strategien spielen, und dies ist auch unabhängig von den restlichen Teilspielen. Das einzig mögliche Teilspielperfekte Nash-Gleichgewicht ist also
 			$$ (M, F) $$
 			in jedem Teilspiel zu spielen.
 		\end{proof}
@@ -515,7 +517,7 @@ Gegeben ist das folgende statische Spiel in Normalformdarstellung.
 		\begin{proof}
 			Da eine Strategie gespielt werden muss, wissen wir
 			$$ 1 = p_L + p_R \text{ und } 1 = p_l + p_r $$
-			In einem Nash-Gleichgewicht in gemischten Strategien muss ein Gleichgewicht zwischen dem erwarteten Nutzen herschen, also
+			In einem Nash-Gleichgewicht in gemischten Strategien muss ein Gleichgewicht zwischen dem erwarteten Nutzen herrschen, also
 			$$ \mathbb{E}[u_1(L)] = \mathbb{E}[u_1(R)] \text{ und } \mathbb{E}[u_2(l)] = \mathbb{E}[u_2(r)] $$ 
 			Aufstellen dieser Gleichungen für Spieler 1 ergibt
 			\begin{align*}
