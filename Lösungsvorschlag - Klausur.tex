@@ -155,9 +155,9 @@ Betrachten Sie das folgende in Extensivform beschriebene Spiel mit zwei Spielern
 \begin{enumerate}[label=\alph*\upshape)]
 	\item Stellen Sie das Spiel in Normalform auf und bestimmen Sie alle Nash-Gleichgewichte. (5P)
 		\begin{proof} 
-			Zuerst betrachten wir die Strategien der Spieler. P1 kann sich entscheiden zwischen $L$, $M$ und $R$. P2 kann nicht unterscheiden, ob er sich bei $L$ oder $M$ befindet und muss demnach unabhängig davon $A$ oder $F$ wählen. Um dies zu einem Spiel in Normalform umzuschreiben, fügen wir noch künstlich bei $R$ die Entscheidung zwischen $A$ und $F$ für $P2$ ein, wobei dies nichts an der Auszahlung ändert. ~\smallskip
+			Zuerst betrachten wir die Strategien der Spieler. P1 kann sich zwischen $L$, $M$ und $R$ entscheiden. P2 kann nicht unterscheiden, ob er sich bei $L$ oder $M$ befindet und muss demnach unabhängig davon $A$ oder $F$ wählen. Um dies zu einem Spiel in Normalform umzuschreiben, fügen wir noch künstlich bei $R$ die Entscheidung zwischen $A$ und $F$ für $P2$ ein, wobei dies nichts an der Auszahlung ändert. ~\smallskip
 			
-			Somit wählt P1 eine der drei Strategien $L$, $M$ und $R$ und unabhängig davon (d.h. simultan) wählt P2 eine seiner beiden:
+			Somit wählt P1 eine der drei Strategien $L$, $M$ und $R$. Unabhängig davon (d.h. simultan) wählt P2 eine seiner beiden Strategien:
 			
 			\begin{center}
 				\begin{game}{3}{2}[P1][P2]
@@ -190,14 +190,14 @@ Betrachten Sie das folgende in Extensivform beschriebene Spiel mit zwei Spielern
 			
 			\textit{Hier bin ich mir nicht sicher, ob man nur in reinen Strategien untersuchen sollte.} Tipp: die Suche nach Nash-Gleichgewichten in gemischten Strategien für drei Strategien ist schwierig und dauert lang. Oft Mals kann man allerdings eine der drei Strategien vorab ausschließen. ~\smallskip
 			
-			Da hier $M$ strikt dominiert durch $R$ ist, folgt analog wie in Aufgabe 1, dass $M$ in keinem Gleichgewicht vorkommen kann. Angenommmen P1 spielt mit Wahrscheinlichkeit $p \in (0, 1)$ die Strategie $L$ und mit $(1-p)$ die Strategie $R$. Für ein Nash-Gleichgewicht müsste der erwartete Nutzen für P2 ausgeglichen sein, d.h.
+			Da $M$ strikt dominiert ist durch $R$, folgt analog wie in Aufgabe 1, dass $M$ in keinem Gleichgewicht vorkommen kann. Angenommmen P1 spielt mit Wahrscheinlichkeit $p \in (0, 1)$ die Strategie $L$ und mit $(1-p)$ die Strategie $R$. Für ein Nash-Gleichgewicht müsste der erwartete Nutzen für P2 ausgeglichen sein, d.h.
 			\begin{align*}
 				\mathbb{E}[u(A)] & \overset{!}{=} \mathbb{E}[u(F)] \\
 				\iff 1 \cdot p +  3 \cdot (1-p) & = 0 \cdot p + 3 \cdot (1-p) \iff p = 0,
 			\end{align*}
 			was einen Widerspruch darstellt. Es existiert also kein Nash-Gleichgewicht in (echt) gemischten Strategien und $(L,A)$ und $(R, F)$ sind damit die einzigen Gleichgewichte. ~\smallskip
 			
-			\textit{Auch hier gab es wieder ein kurzes Argument: da nämlich dass $A$ die Strategie $F$ schwach dominiert. Würde P1 eine echte Mischung auf $L$ und $R$ spielen, wird P2 stets $A$ wählen wollen, worauf $P1$ allerdings lieber rein $L$ spielt. Das heißt es kann kein Gleichgewicht in gemischten Strategien geben. Falls dies nicht ganz klar ist, einfach wie oben kurz per Hand nachrechnen.}
+			\textit{Auch hier gibt es wieder ein kurzes Argument: $A$ dominiert nämlich die Strategie $F$ schwach. Würde P1 eine echte Mischung auf $L$ und $R$ spielen, wird P2 stets $A$ wählen wollen, worauf $P1$ allerdings lieber rein $L$ spielt. Das heißt es kann kein Gleichgewicht in gemischten Strategien geben. Falls dies nicht ganz klar ist, einfach wie oben kurz per Hand nachrechnen.}
 		\end{proof}
 	\item Sind die Nash-Gleichgewichte dieses Spiels auch Teilspielperfekte Nash-Gleichgewichte? Begründen Sie kurz Ihre Antwort. (5P)
 		\begin{proof}
@@ -205,7 +205,7 @@ Betrachten Sie das folgende in Extensivform beschriebene Spiel mit zwei Spielern
 		\end{proof}
 	\item Ist die Strategie \enquote{F} des Spielers 2 sequentiell rational? Begründen Sie kurz Ihre Antwort. (5P)
 		\begin{proof}
-			Die Strategie $F$ ist nicht sequentiell rational. Hier ist es ganz gleich, welche Einschätzung (Beliefs) P2 in seiner Informationsmenge hat, es ist immer besser, $A$ zu spielen als $F$, falls er die Entscheidung im sequentiellen Spiel treffen muss. ~\smallskip
+			Die Strategie $F$ ist nicht sequentiell rational. Hier ist es ganz gleich, welche Einschätzung (Beliefs) P2 in seiner Informationsmenge hat, es ist immer besser, $A$ als $F$ zu spielen. ~\smallskip
 			
 			Mal nebenbei soll bemerkt sein, dass $M$ dominiert ist, also nach den Einschätzungen von P2 nicht gespielt wird. Im sequentiellen Spiel, wird $P2$ also auch deswegen stets $A$ spielen wollen. ~\smallskip
 		\end{proof}
@@ -343,7 +343,7 @@ Betrachten Sie das folgende in Extensivform beschriebene Markteintritts-Spiel mi
 \begin{enumerate}[label=\alph*\upshape)]
 	\item Erklären Sie anhand des Beispiels kurz den Begriff \enquote{dynamisches Spiel}. (3P)
 		\begin{proof}
-			Bei einem dynamischen Spiel wählen die Spieler ihre Aktionen sequentiell, und haben damit die Möglichkeit auf die Aktionen anderer zu reagieren. Spieler 2 sieht, ob Spieler I $In$ oder $Out$ gespielt hat, er kann zwar nicht zwischen $F$ und $A$ unterscheiden, allerdings muss er nicht simultan mit $E$ spielen. D.h. aufgrund der Beobachtbarkeit ob $E$ in den Markt eingetreten ist oder eben nicht, und der dadurch möglichen sequentiellen Entscheidung, also ob er $F$ oder $A$ als Antwort auf $In F / IN A$ spielen möchte, ist dies ein dynamisches Spiel.
+			Bei einem dynamischen Spiel wählen die Spieler ihre Aktionen sequentiell, und haben damit die Möglichkeit auf die Aktionen anderer zu reagieren. Spieler 2 sieht, ob Spieler I $In$ oder $Out$ gespielt hat, er kann zwar nicht zwischen $F$ und $A$ unterscheiden, allerdings muss er nicht simultan mit $E$ spielen. D.h. aufgrund der Beobachtbarkeit ob $E$ in den Markt eingetreten ist oder eben nicht, und der dadurch möglichen sequentiellen Entscheidung, also ob er $F$ oder $A$ als Antwort auf $In,F/In,A$ spielen möchte, ist dies ein dynamisches Spiel.
 		\end{proof} ~\newpage
 		\textit{Beachte:	 Im Gegensatz zu Aufgabe 2 besitzt dieses Spiel zwei Teilspiele:}
 			
@@ -380,7 +380,7 @@ Betrachten Sie das folgende in Extensivform beschriebene Markteintritts-Spiel mi
 \end{figure}
 	\item Bestimmen Sie alle Nash-Gleichgewichte des kleinsten Teilspiels des Spiels. Verwenden Sie hierzu die Spielmatrix dieses Spiels.
 		\begin{proof}
-			Wir wissen, dass wir uns im kleinen Teilspiel befinden. Das heißt, es wurde von $E$ bereits $In$ gespielt. Die so erhaltene Spielmatrix ist
+			Wir wissen, dass wir uns im kleinen Teilspiel befinden. Das heißt, es wurde von $E$ bereits $In$ gespielt. Die so verbleibende Spielmatrix ist
 						
 			\begin{center}
 				\begin{game}{2}{2}[E][I]
@@ -399,7 +399,7 @@ Betrachten Sie das folgende in Extensivform beschriebene Markteintritts-Spiel mi
 				\end{game}
 			\end{center} ~\smallskip
 			
-			Die Nash-Gleichgewichte im kleinen Teilspiel sind wieder die Strategie-Kombinationen bei denen beide Spieler die beste Antwort aufeinander spielen, also $(F, F)$ und $(A, A)$. ~\smallskip
+			Die Nash-Gleichgewichte im kleinen Teilspiel sind also wieder die Strategie Kombinationen bei denen beide Spieler die beste Antwort aufeinander spielen, also $(F, F)$ und $(A, A)$. ~\smallskip
 			
 			\textit{Auch hier ist es nicht ganz klar, ob nur reine Gleichgewichte gesucht sind.} Betrachtet man wieder die Gleichgewichtsbedingung für gemischte Gleichgewichte, wobei $p$ die Wahrscheinlichkeit ist, dass $E$ die Strategie $F$ spielt und $q$ die Wahrscheinlichkeit ist, dass $I$ die Strategie $F$ spielt, so folgt
 			$$ \mathbb{E}[u_1(F)] = 1 \cdot q + 2 \cdot (1 - q) = 0 \cdot q + 3 \cdot (1 - q) = \mathbb{E}[u_1(A)] \iff q = 0.5  $$
@@ -537,7 +537,9 @@ Gegeben ist das folgende statische Spiel in Normalformdarstellung.
 		\end{proof}
 	\item Ein Freund sagt zu Spieler 1: \textit{\enquote{So wie Spieler 2 im Nash-Gleichgewicht spielt, bist Du indifferent zwischen $L$ und $R$. Also ist es egal, ob Du randomisierst oder eine der Aktionen $L$ bzw. $R$ mit Wahrscheinlichkeit 1 spielst.}} Erläutern Sie kurz, ob Sie der Aussage des Freundes zustimmen oder nicht. (5P)
 		\begin{proof}
-			Betrachten wir, dass Spieler 2 wie im Nash-Gleichgewicht randomisiert, so ist die erwartete Auszahlung von den Spielern gegeben durch: 
+			Angenommen Spieler 2 randomisiert fix wie im Nash-Gleichgewicht, so ist die Gleichgewichtsbedingung
+			$$ \mathbb{E}[u_1(L)] = \mathbb{E}[u_2(L)] $$
+			gerade die Behauptung aus der Aufgaben. Falls wir das kurz in der Aufgabe nachrechnen, ist die erwartete Auszahlung von den Spielern gegeben durch: 
 						
 			\begin{center}
 				\begin{game}{2}{1}[Spieler 1][Spieler 2]
@@ -547,7 +549,7 @@ Gegeben ist das folgende statische Spiel in Normalformdarstellung.
 				\end{game}
 			\end{center}
 		
-			Das heißt, sowohl $L$ als auch $R$ ergeben die gleiche erwartete Auszahlung, gegeben dass Spieler 2 die Strategie $0.5 \cdot l + 0.5 \cdot r$ spielt und es ist egal, ob wir $L$ oder $R$ mit Sicherheit spielen. Wie allerdings in der a) besprochen, existiert kein Nash-Gleichgewicht in reinen Strategien für Spieler 1. Das heißt könnte Spieler 2 von seiner Gleichgewichtsstrategie abweichen, so würde er auf eine deterministische Strategie anders spielen.
+			Das heißt, sowohl $L$ als auch $R$ ergeben die gleiche erwartete Auszahlung, gegeben dass Spieler 2 die Strategie $0.5 \cdot l + 0.5 \cdot r$ spielt und es ist egal, ob wir $L$ oder $R$ mit Sicherheit spielen. Wie allerdings in der a) besprochen, existiert kein Nash-Gleichgewicht in reinen Strategien für Spieler 1. Das heißt Spieler 2 würde von seiner Gleichgewichtsstrategie abweichen wollen, falls nur $L$ oder $R$ deterministische gespielt werden würde von Spieler 1.
 		\end{proof}
 \end{enumerate}
 
@@ -558,7 +560,7 @@ Gegeben ist das folgende statische Spiel in Normalformdarstellung.
 \begin{enumerate}[label=\alph*\upshape)]
 	\item Erklären Sie kurz die Begriffe \enquote{Teilspiel} und \textit{Spiel mit perfekter Information}. (6P)
 		\begin{proof}
-			Ein Teilspiel ist ein Teil des Gesamtspiels, welche an einem deterministischen (d.h. nicht in einem Informationsbezirk), nicht-terminalen (d.h. nicht in einem Endknoten) Knoten beginnt, alle darauffolgenden Knoten umfasst und keine weiteren. Außerdem darf ein Teilspiel keinen Informationsbezirk durchschneiden, d.h. ist ein Knoten eines Informationsbezirk im Teilspiel, so muss auch jeder andere Knoten desselben Informationsbezirks im Teilspiel sein. ~\smallskip
+			Ein Teilspiel ist ein Teil des Gesamtspiels, welche an genau einem deterministischen (d.h. nicht in einem Informationsbezirk), nicht-terminalen (d.h. nicht in einem Endknoten) Knoten beginnt, alle darauffolgenden Knoten umfasst und keine weiteren. Außerdem darf ein Teilspiel keinen Informationsbezirk durchschneiden, d.h. ist ein Knoten eines Informationsbezirk im Teilspiel, so muss auch jeder andere Knoten desselben Informationsbezirks im Teilspiel sein. ~\smallskip
 			
 			Ein Spiel mit perfekte Information besteht, wenn jedem Spieler zum Zeitpunkt einer Entscheidung stets das vorangegangene Spielgeschehen bekannt ist. Das bedeutet, dass die perfekte Information durch nur einelementige Informationsbezirke charakterisiert wird. Denn angenommen es gebe einen mehr als einelementigen Informationsbezirk, so würde der Spieler nicht zwischen den Knoten unterscheiden können und damit nicht definitiv sagen können, welche Aktion der Gegenspieler dorthin geführt hat.
 		\end{proof}
@@ -603,7 +605,7 @@ Gegeben ist das folgende statische Spiel in Normalformdarstellung.
 				\end{game}
 			\end{center}
 			
-			Analog liefert die Eleminierung von strikt dominierten Strategien, dass $l$ von $r$ dominiert wird und $L$ von $R$ und es verbleibt $(R, r)$. Betrachtet man die Nash-Gleichgewichte, folgt das Gleiche aufgrund der Dominanz:
+			Analog liefert die Eliminierung von strikt dominierten Strategien, dass $l$ von $r$ dominiert wird und $L$ von $R$ und es verbleibt $(R, r)$. Betrachtet man die Nash-Gleichgewichte, folgt das Gleiche aufgrund der Dominanz:
 
 			\begin{center}
 				\begin{game}{2}{2}[Spieler 1][Spieler 2]
@@ -612,7 +614,7 @@ Gegeben ist das folgende statische Spiel in Normalformdarstellung.
 	 				$R$ &  $\underline{3}, 3$ & \textbf{\underline{4}, \underline{4}}
 				\end{game}
 			\end{center}		
-			Somit ist $(R, r)$ das einzige Nash-Gleichgewicht, ist die einzige rationalisierbare Strategie und überlebt als Einziges die interativerElemination strikt dominierter Strategien.	
+			Somit ist $(R, r)$ das einzige Nash-Gleichgewicht, ist die einzige rationalisierbare Strategie und überlebt als Einziges die interativer Elimination strikt dominierter Strategien.	
 		\end{proof}
 	\item Ein Dozent sagt: \textit{Spielerinnen, die keine Nash-Gleichgewichtsstrategie spielen, verhalten sich nicht rational.} Stimmen Sie dieser Aussage zu? Begründen Sie kurz Ihre Antwort. (5P)
 		\begin{proof}
