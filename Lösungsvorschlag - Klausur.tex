@@ -1,0 +1,997 @@
+\documentclass[12pt]{article} 
+
+\usepackage{mmap}
+
+\usepackage[utf8]{inputenc} 
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{calc}
+\usepackage{csquotes}
+\usepackage{enumitem}
+\usepackage[margin = 1in]{geometry}
+\usepackage{hyperref} 
+\usepackage{mathtools}
+\usepackage{microtype}
+\usepackage{setspace} 
+\usepackage{sgame}
+\usepackage{soul}
+\usepackage{subfig}
+\usepackage{tikz} 
+\usetikzlibrary{trees, calc}
+
+\author{Martin Belica}
+\title{Lösungsvorschlag - Klausur}
+
+\hypersetup{colorlinks=true, linktoc=all, linkcolor=blue}
+\renewcommand*{\proofname}{Lösungsvorschlag}
+\def\table{\def\figurename{Table}\figure}
+\let\endtable\endfigure
+
+
+\begin{document} 
+
+\subsection*{1. Statische Spiele}
+Gegeben sie das folgende statische Spiel in Normalform
+	
+\begin{center}
+	\begin{game}{2}{3}[Spieler 1][Spieler 2]
+	       &  $b_1$  & $b_2$  & $b_3$ \\
+	 $a_1$ &  $1, 0$ & $1, 2$ & $0,1$ \\
+	 $a_2$ &  $0, 3$ & $0, 1$ & $2,0$ \\
+	\end{game}
+\end{center}
+
+\begin{enumerate}[label=\alph*\upshape)]
+	\item Welche Lösungsmenge des Spiels ergibt sich nach iterativer Elimination strikt dominierter Strategien? (5P)
+		\begin{proof}
+			Strategie $b_3$ ist für Spieler 2 strikt dominiert durch $b_2$, wir erhalten:
+			\begin{center}
+				\begin{game}{2}{3}[Spieler 1][Spieler 2]
+	     			    	  &  $b_1$  & $b_2$  & \st{$b_3$} \\
+	 				$a_1$ &  $1, 0$ & $1, 2$ & \st{$0,1$} \\
+	 				$a_2$ &  $0, 3$ & $0, 1$ & \st{$2,0$} \\
+				\end{game}
+			\end{center}
+			Im reduzierten Spiel ist $a_1$ durch $a_2$ strikt dominiert für Spieler 1, d.h. die Reduktion des Spiels liefert
+			\begin{center}
+				\begin{game}{2}{3}[Spieler 1][Spieler 2]
+	     			    	  &  $b_1$  & $b_2$  & \st{$b_3$} \\
+	 				$a_1$ &  $1, 0$ & $1, 2$ & \st{$0,1$} \\
+	 				\st{$a_2$} &  \st{$0, 3$} & \st{$0, 1$} & \st{$2,0$} \\
+				\end{game}
+			\end{center}
+			Im verbleibenden Spiel spielt Spieler 1 deterministisch $a_1$ und für diesen Fall dominiert für Spieler 2 $b_2$ die Strategie $b_1$ als beste Antwort. Wir erhalten:		
+			\begin{center}
+				\begin{game}{2}{3}[Spieler 1][Spieler 2]
+	     			    	  &  \st{$b_1$}  & $b_2$  & \st{$b_3$} \\
+	 				$a_1$ &  \st{$1, 0$} & $1, 2$ & \st{$0,1$} \\
+	 				\st{$a_2$} &  \st{$0, 3$} & \st{$0, 1$} & \st{$2,0$} \\
+				\end{game}
+			\end{center}	
+			Somit ist Lösungsmenge des Spiels dich sich nach iterativer Elimination strikt dominierter Strategien ergibt ist
+			$$ S_{eis} = \left(a_1, b_2 \right) $$
+			\textit{Beachte: die Eliminierung von \textbf{strikt} dominierten Strategien ist immer eindeutig - im Gegensatz zur Eliminierung von schwach dominierten Strategien (falls ihr dies hattet).}
+		\end{proof}
+	\item Gibt es in diesem Spiel (neben dem Gleichgewicht in reinen Strategien) ein Gleichgewicht in gemischten Strategien? Begründen Sie kurz Ihre Antwort. (5P)
+		\begin{proof}
+			Die kurze Antwort wäre: nein, in einem Gleichgewicht (in gemischten Strategien) können nur Strategien sein,  die die Eliminierung von strikt dominierten Strategien überleben. ~\smallskip
+			
+			Die lange Antwort: angenommen Spieler 2 würde in einem gemischten Gleichgewicht $b_3$ mit positiver Wahrscheinlichkeit $q_3 > 0$ spielen. Da $b_3$ strikt dominiert durch $b_2$ ist, lohnt es sich (unabhängig davon was Spieler 1 macht) für Spieler 2 $b_2$ anstatt $b_3$ zu spielen, also $b_3$ nicht zu spielen und die Wahrscheinlichkeit für $b_2$ um $q_3$ zu erhöhen. Da wir wissen, dass in einem Gleichgewicht $b_3$ nie gespielt werden wird, können wir analog zu oben $a_2$ für Spieler 1 ausschließen und danach ebenso $b_1$ für Spieler 2. ~\smallskip
+			
+			Da also nur eine Strategie pro Spieler die Eliminierung von strikt dominierten Strategien überlebt, kann es keine (echt) gemischten Strategien geben.
+		\end{proof}
+	\item Geben Sie ein kurze Begründung für die folgende Aussage: \textit{Wenn Spielerin $i$ im Nash-Gleichgewicht die Strategien $s_{ik}$ und $s_{il}$ mit positiven Wahrscheinlichkeiten $\hat{p}_{ik} > 0$ und $\hat{p}_{il} > 0$ spielt, dann ist sie indifferent zwischen den reinen Strategien $s_{ik}$ und $s_{il}$.} (5P)
+		\begin{proof}
+			Diese Aussage ist wahr. Sei $S^*_{mixed}$ die gemischte Strategie aus der Aufgabe. Angenommen die Spielerin wäre nicht indifferent zwischen den reinen Strategien $s_{ik}$ und $s_{il}$ im Nash-Gleichgewicht, sei o.B.d.A $k$ besser. In diesem Fall kann die Spielerin ihre erwartete Auszahlung steigern, indem sie die Strategie $s_{ik}$ mit höherer Wahrscheinlichkeit anstelle $s_{il}$ spielt (vgl. zu b)). Rechnerisch würde das so aussehen:
+			\begin{align*}
+				\mathbb{E}[u(S^*_{mixed})] & = \mathbb{E}[u(S_{Rest})] + \hat{p}_{ik} \cdot \mathbb{E}[u(s_{ik})] + \hat{p}_{il} \cdot \mathbb{E}[u(s_{il})] \\
+				& < \mathbb{E}[u(S_{Rest})] +\hat{p}_{ik} \cdot \mathbb{E}[u(s_{ik})] + \hat{p}_{il} \cdot \mathbb{E}[u(s_{ik})] = \mathbb{E}[u(\tilde{S}_{mixed})]
+			\end{align*}
+			Dies widerspricht aber der Voraussetzung, dass im Nash-Gleichgewicht 
+			$$ \mathbb{E}[u_i(S^*_{mixed})] \geq \mathbb{E}[u_i(S_{mixed})]  $$
+			für alle $S_{mixed} \in \Delta S_i$ gilt, insbesondere für $\tilde{S}_{mixed}$. ~\smallskip
+			
+			\textit{Mal nebenbei: das folgt unter Anderem aus der Linearität des Erwartungswertes.}
+		\end{proof}
+\end{enumerate}
+
+\newpage
+
+\subsection*{2. Dynamische Spiele}
+
+Betrachten Sie das folgende in Extensivform beschriebene Spiel mit zwei Spielern 1 und 2 und den Auszahlungen $u_1$, $u_2$.
+
+	\tikzset{
+		solid node/.style={circle,draw,inner sep=1.5,fill=black},
+		hollow node/.style={circle,draw,inner sep=1.5}
+	}
+
+\begin{figure}[htbp]
+	\centering
+	\begin{tikzpicture}[scale=1.5,font=\footnotesize]
+	% Specify spacing for each level of the tree
+	\tikzstyle{level 1}=[level distance=15mm,sibling distance=40mm]
+	\tikzstyle{level 2}=[level distance=15mm,sibling distance=22mm]
+	\tikzstyle{level 3}=[level distance=15mm,sibling distance=15mm]
+	% The Tree
+	\node(0)[hollow node,label=above:{$P1$}]{}
+	child{node(1)[solid node]{}
+		child{node[label=below:{$(2,1)$},yshift=2]{} edge from parent node[left]{$A$}}
+		child{node(3)[label=below:{$(0,0)$},yshift=2]{} edge from parent node[right]{$F$}}
+		edge from parent node[left,xshift=-7]{$L$}
+	}
+	child{node(2)[solid node]{}
+		child{node[label=below:{$(0,2)$},yshift=2]{} edge from parent node[left]{$A$}}
+		child{node(6)[label=below:{$(0,1)$},yshift=2]{} edge from parent node[right]{$F$}}	
+		edge from parent node[right,xshift=3]{$M$}
+	}
+	child{node[label=below:{$(1,3)$},yshift=2]{} edge from parent node [right,xshift=7]{$R$}}
+	;
+	% information set (from node 1 to node 2)
+	\draw[dashed,rounded corners=10]($(1) + (-.2,.25)$)rectangle($(2) +(.2,-.25)$);
+	% Highlighting a subgame in red (from node 7 to 8). Remove the code below if you don't want to highlight the subgame.
+	%\draw[dotted, thick, red, rounded corners=15]($(7) + (-.4,1.75)$)rectangle($(8) +(.4,-.5)$);
+	% specify mover at 2nd information set
+	\node at ($(1)!.5!(2)$) {$P2$};
+	\end{tikzpicture}
+\end{figure}
+
+\begin{enumerate}[label=\alph*\upshape)]
+	\item Stellen Sie das Spiel in Normalform auf und bestimmen Sie alle Nash-Gleichgewichte. (5P)
+		\begin{proof} 
+			Zuerst betrachten wir die Strategien der Spieler. P1 kann sich entscheiden zwischen $L$, $M$ und $R$. P2 kann nicht unterscheiden, ob er sich bei $L$ oder $M$ befindet und muss demnach unabhängig davon $A$ oder $F$ wählen. Um dies zu einem Spiel in Normalform umzuschreiben, fügen wir noch künstlich bei $R$ die Entscheidung zwischen $A$ und $F$ für $P2$ ein, wobei dies nichts an der Auszahlung ändert. ~\smallskip
+			
+			Somit wählt P1 eine der drei Strategien $L$, $M$ und $R$ und unabhängig davon (d.h. simultan) wählt P2 eine seiner beiden:
+			
+			\begin{center}
+				\begin{game}{3}{2}[P1][P2]
+					    & $A$     & $F$ \\
+	 				$L$ &  $2, 1$ & $0, 0$  \\
+	 				$M$ &  $0, 2$ & $0, 1$ \\
+	 				$R$ &  $1, 3$ & $1, 3$ \\
+				\end{game}
+			\end{center} ~\smallskip
+			
+			Wir ermitteln für jede Strategie jedes Spielers die beste Antwort (also die höchste Auszahlung pro Spalte für P1 und die höchste Auszahlung pro Zeile für P2) und unterstreichen Sie im Spiel:
+			\begin{center}
+				\begin{game}{3}{2}[P1][P2]
+					    & $A$     & $F$ \\
+	 				$L$ &  $\underline{2}, \underline{1}$ & $0, 0$  \\
+	 				$M$ &  $0, \underline{2}$ & $0, 1$ \\
+	 				$R$ &  $1, \underline{3}$ & $\underline{1}, \underline{3}$ \\
+				\end{game}
+			\end{center}
+			Ein Nash-Gleichgewicht ist eine beidseitig beste Antwort, also diejenige Strategiekombination bei der beide Auszahlungen unterstrichen sind. Wir erhalten
+			\begin{center}
+				\begin{game}{3}{2}[P1][P2]
+					    & $A$     & $F$ \\
+	 				$L$ &  \textbf{\underline{2}, \underline{1}} & $0, 0$  \\
+	 				$M$ &  $0, \underline{2}$ & $0, 1$ \\
+	 				$R$ &  $1, \underline{3}$ & \textbf{\underline{1}, \underline{3}} \\
+				\end{game}
+			\end{center}
+			die beiden Nash-Gleichgewichte in reinen Strategien $(L,A)$ und $(R, F)$. ~\smallskip
+			
+			\textit{Hier bin ich mir nicht sicher, ob man nur in reinen Strategien untersuchen sollte.} Tipp: die Suche nach Nash-Gleichgewichten in gemischten Strategien für drei Strategien ist schwierig und dauert lang. Oft Mals kann man allerdings eine der drei Strategien vorab ausschließen. ~\smallskip
+			
+			Da hier $M$ strikt dominiert durch $R$ ist, folgt analog wie in Aufgabe 1, dass $M$ in keinem Gleichgewicht vorkommen kann. Angenommmen P1 spielt mit Wahrscheinlichkeit $p \in (0, 1)$ die Strategie $L$ und mit $(1-p)$ die Strategie $R$. Für ein Nash-Gleichgewicht müsste der erwartete Nutzen für P2 ausgeglichen sein, d.h.
+			\begin{align*}
+				\mathbb{E}[u(A)] & \overset{!}{=} \mathbb{E}[u(F)] \\
+				\iff 1 \cdot p +  3 \cdot (1-p) & = 0 \cdot p + 3 \cdot (1-p) \iff p = 0,
+			\end{align*}
+			was einen Widerspruch darstellt. Es existiert also kein Nash-Gleichgewicht in (echt) gemischten Strategien und $(L,A)$ und $(R, F)$ sind damit die einzigen Gleichgewichte. ~\smallskip
+			
+			\textit{Auch hier gab es wieder ein kurzes Argument: da nämlich dass $A$ die Strategie $F$ schwach dominiert. Würde P1 eine echte Mischung auf $L$ und $R$ spielen, wird P2 stets $A$ wählen wollen, worauf $P1$ allerdings lieber rein $L$ spielt. Das heißt es kann kein Gleichgewicht in gemischten Strategien geben. Falls dies nicht ganz klar ist, einfach wie oben kurz per Hand nachrechnen.}
+		\end{proof}
+	\item Sind die Nash-Gleichgewichte dieses Spiels auch Teilspielperfekte Nash-Gleichgewichte? Begründen Sie kurz Ihre Antwort. (5P)
+		\begin{proof}
+			Wir haben hier nur ein Teilspiel. \textit{Beachte: Ein Teilspiel beginnt nämlich bei einem deterministischen, nicht-terminalen Knoten, enthält alle nachfolgenden Knoten und darf keine Informationsmenge durchschneiden.} Außerdem sind Nash-Gleichgewichte im Gesamtspiel perfekt (niemand will nämlich abweichen). Da dies das einzige Teilspiel ist, sind $(L,A)$ und $(R, F)$ auch teilspielperfekt. 
+		\end{proof}
+	\item Ist die Strategie \enquote{F} des Spielers 2 sequentiell rational? Begründen Sie kurz Ihre Antwort. (5P)
+		\begin{proof}
+			Die Strategie $F$ ist nicht sequentiell rational. Hier ist es ganz gleich, welche Einschätzung (Beliefs) P2 in seiner Informationsmenge hat, es ist immer besser, $A$ zu spielen als $F$, falls er die Entscheidung im sequentiellen Spiel treffen muss. ~\smallskip
+			
+			Mal nebenbei soll bemerkt sein, dass $M$ dominiert ist, also nach den Einschätzungen von P2 nicht gespielt wird. Im sequentiellen Spiel, wird $P2$ also auch deswegen stets $A$ spielen wollen. ~\smallskip
+		\end{proof}
+\end{enumerate}
+
+\newpage
+
+\subsection*{3. Wiederholte Spiele}
+
+Das folgende statische Spiel wird wiederholt gespielt. Es wird angenommen, dass beide Spieler nach jeder Spielstufe die Aktion aller Spieler beobachten können. Es werden nur Gleichgewichte in reinen Strategien betrachtet.
+
+			\begin{center}
+				\begin{game}{2}{2}[Spieler 1][Spieler 2]
+					    & $A$     & $F$ \\
+	 				$L$ & $3, 3$ & $0, 4$  \\
+	 				$M$ &  $4, 0$ & $1, 1$ 
+				\end{game}
+			\end{center}
+
+\begin{enumerate}[label=\alph*\upshape)]
+	\item Bestimmen Sie das Nash-Gleichgewicht des statischen Spiels. 
+		\begin{proof}
+			Betrachten wir die besten Antworten, so ergibt sich:
+			\begin{center}
+				\begin{game}{2}{2}[Spieler 1][Spieler 2]
+					    & $A$     & $F$ \\
+	 				$L$ & $3, 3$ & $0, \underline{4}$  \\
+	 				$M$ &  $\underline{4}, 0$ & \textbf{\underline{1}, \underline{1}} 
+				\end{game}
+			\end{center}
+			Als gegenseitig beste Antwort ist $(M, F)$ ein Nash-Gleichgewicht in reinen Strategien. Beachte, dass $M$ und $F$ jeweils strikt dominante Strategien sind (man sieht dies auch dadurch, dass die komplette Zeile bzw. Spalte unterstrichen ist), und es somit kein Nash-Gleichgewicht in gemischten Strategien mehr geben kann (vgl. Aufgabe 2).
+		\end{proof}
+
+	\item Geben Sie alle Teilspielperfekten Nash-Gleichgewichte des Gesamtspiels an, wenn das statische Spiel endlich oft nacheinander gespielt wird und die Auszahlung des Gesamtspiels der Summe der Auszahlungen in jede Stufe entspricht. Begründen Sie kurz Ihre Antwort (5P)
+		\begin{proof}
+			Allgemein beginnt man bei endlichen Spielen von hinten und betrachtet das letzte Teilspiel und arbeitet sich nach vorne durch (man untersucht beim letzten die beste Strategie, dann als Folge unter Beachtung der Auszahlung beim letzten betrachtet man das vorletzte Teilspiel, usw.). Da hier $M$ bzw. $F$ strikt dominante Strategien sind, werden beide Spiele unabhängig von der Strategie des anderen in jedem der endlich vielen Teilspiele jeweils diese Strategien spielen, und dies ist auch unabhängig von den restlichen Teilspielen. Das einzig mögliche Teilspielperfekte Nash-Gleichgewicht ist also
+			$$ (M, F) $$
+			in jedem Teilspiel zu spielen.
+		\end{proof}
+	\item Wieviele Teilspiele hat das Gesamtspiel wenn das statische Spiel zwei Mal nacheinander gespielt wird? Begründen Sie kurz Ihre Antwort. (3P) 	\begin{proof}
+			Angenommen dieses Spiel wird zwei Mal nacheinander gespielt. Beachte, dass dies ein statisches Spiel ist, also beide Spieler gleichzeitig spielen und nur den Ausgang der letzten Runde sehen. Für jeden der vier möglichen Ausgänge der letzten Runde entsteht nur ein Teilspiel da danach beide simultan (Informationsbezirk (Informationset) zwischen den Knoten) spielen müssen und nach der zweiten Runde das Spiel beendet ist (terminaler Knoten). Es gibt also
+			$$ 2^2 \cdot 1 = 4 $$
+			kleine Teilspiele zu welchem wir noch das Gesamtspiel hinzuaddieren müssen. Insgesamt besitzt das Spiel also 5 Teilspiele. ~\smallskip
+			
+			\textit{Bemerkung: Hier könntest du dir mal überlegen, wie viel Teilspiele ein dynamisches Spiel hätte. Solltest du Probleme haben, zeichne dir einen Spielbaum ein, aber vergiss die Informationsbezirke nicht}
+		\end{proof}
+	\item Nehmen Sie an, dass das statische Spiel unendlich oft wiederholt wird und die Spieler einen gemeinsamen Diskontfaktor $\delta < 1$ haben. Formulieren Sie eine Trigger-Strategie mit der Eigenschaft, dass die Spieler, wenn diese Strategien von beiden gespielt wird, die durchschnittliche Auszahlung $v = 3$ erhalten. (6P) 
+		\begin{proof}
+			\textit{Ich hoffe sehr, dass ich die Aufgabe hier richtig verstanden habe, denn die Aufgabenstellung scheint mir nicht ganz eindeutig. So wie es in der Aufgabe steht, klingt es danach als solle man für alle $\delta$ eine Strategie definieren, was eine sehr komplizierte Aufgabe ist. Ich denk es ist eher, für das richtige $\delta$ eine Strategie zu definieren. Sollte ich mich da täuschen, wäre es gut, wenn du mir kurz deine Vorlesungsunterlagen zuschickst, und ich werde den Lösungsvorschlag korrigieren.} ~\smallskip
+			
+			 Die Idee ist, dass beide Spieler sich eigentlich auf die Strategie $(L, A)$ einigen wollen und damit eine Auszahlung von $(3, 3)$ erhalten. Sollte nun einer einmal abweichen und für sich $4$ als Auszahlung einstreichen wollen, so wird der andere ihn ab dann bestrafen und auch nur noch die andere Strategie spielen, sodass $(1, 1)$ in allen nachfolgenden Runden die Auszahlung ist. ~\smallskip
+			
+			Die Auszahlung beim Befolgen der Strategie ist im Durchschnitt trivialerweise gleich 3 und berechnet sich zu
+			$$ 3 \cdot \sum_{t = 0}^\infty \delta^t = \frac{3}{1 - \delta} $$
+			Die Auszahlung beim Abweichen ist
+			$$ 4 + 1 \cdot \sum_{t = 1}^\infty \delta^t = 4 + 1 \cdot \frac{\delta}{1 - \delta} $$
+			Wir wollen, dass der Durchschnitt bei 3 bleibt, also Abweichen sich nicht lohnt. Das heißt die erwartete Auszahlung ist gleich:
+			$$ \frac{3}{1 - \delta} \overset{!}{=} 4 + 1 \cdot \frac{\delta}{1 - \delta} $$
+			Umstellen nach $\delta$ liefert:
+			\begin{align*}
+				3 = 4 \cdot (1 - \delta) + \delta & \iff 3 = 4 - 4 \cdot \delta + \delta \\
+				& \iff -1 = -3 \cdot \delta \\
+				& \iff \delta = \frac{1}{3}
+			\end{align*}
+			das heißt bei einem Diskontfaktor von $\delta = 0.3$ ist $(L, A)$ zu spielen, bis einer der beiden abweicht und ab dem Moment nur noch $(M, F)$ spielen die Trigger-Strategie, die im Durchschnitt für beide Spieler genau 3 auszahlt.
+		\end{proof}
+\end{enumerate}
+
+\newpage
+
+\subsection*{4. Räumlicher Wettbewerb}
+
+Zwei Eisverkäufer $i =1, 2$ könne ihren Verkaufsstand gleichzeitig irgendwo auf einem Strandabschnitt von einem Kilometer Länge aufstellen. Ihre Entscheidung wird durch die Variable $s_i$ mit $0 \leq s_i \leq 1$ beschrieben, wobei $s_i = 0$ das linke Ende des Strandes und $s_i = 1$ das rechte Ende des Strandes bezeichnet. Der Eispreis wird von der Gemeinde vorgegeben. Zu diesem Preis möchten die Verkäufer möglichst viele Kunden, also einen möglichst großen Marktanteil $m_i$ (mit $m_1 + m_2 = 1$) haben. Die Kunden sind gleichmäßig auf dem Strandabschnitt verteilt und wählen den Eisverkäufer der ihnen am nächsten liegt. Wenn zwei Verkäufer gleich weit entfernt sind entscheiden sie per Los. ~\bigskip
+
+\textit{Vorab: man hätte die folgende Aufgabe etwas allgemeiner lösen können. Ich bin mir aber sicher, dass dies gereicht hätte und es schien mir verständlicher es so zu formulieren (es ist auch so schon verwirrend). Der Grundgedanke ist einfach: man stellt sich zwischen den Gegner und die Mehrheit der Kunden.}
+
+\begin{enumerate}[label=\alph*\upshape)]
+	\item Wo positionieren sich die beiden Verkäufer im Nash-Gleichgewicht? (3P)
+		\begin{proof}
+			Das Nash-Gleichgewicht ist $s_1 = s_2 = 0,5$. Alle Kunden haben nämlich den gleichen Abstand zu den beiden Verkäufern, d.h. beide Verkäufer erhalten in Erwartung die Hälfte aller Kunden. Angenommen einer der beiden Verkäufer würde abweichen, sagen wir o.B.d.A dies wäre Verkäufer 1 und er weicht nach links ab. Nun würde alle Kunden links davon zu ihm kommen und die Kunden zwischen Verkäufern würden sich in der Mitte aufteilen. Die linke Hälfte zwischen den Verkäufern liegt näher bei Verkäufer 1 und die rechte Hälfte würde zu Verkäufer 2 gehen. Die restlichen Käufer, also die rechts von der Mitte, würde allerdings nun näher bei Verkäufer 2 liegen. Das heißt in Erwartung würde Verkäufer 1 nun weniger als die Hälfte aller Kunden bekommen und durch das Abweichen sich schlechter stellen. Da sowohl Verkäufer, als auch Seite beliebig war, möchte demnach keiner der Beiden von $s_1 = s_2 = 0,5$ abweichen, d.h. es ist Nash-Gleichgewicht.
+		\end{proof}
+	\item Erklären Sie kurz, warum das Strategieprofil $s_1 = s_2 = 0.6$ kein Nash-Gleichgewicht des Spiels darstellt. (5P)
+		\begin{proof}
+			Für ein Nash-Gleichgewicht müsste keiner der Verkäufer abweichen wollen. In der Ausgangssituation haben wieder alle Verkäufer trivialerweise den gleichen Abstand zu beiden Verkäufern, d.h. $m_1 = m_2 = 0.5$ in Erwartung. Falls sich allerdings einer der beiden minimal Richtung Mitte versetzt, z.B. $s_1 = 0.59$, so erhält er Spieler links bis $0.59$ und die Käufer zwischen den beiden würden sich wieder wie bei der a) aufteilen. Spieler eins würde sich also besser stellen 
+			$$ \tilde{m}_1 \geq 0.59 > 0.5 = m_1, $$
+			und $s_1 = s_2 = 0.6$ kann damit kein Nash-Gleichgewicht des Spiels darstellen.
+		\end{proof}
+	\item Wo positionieren sich die beiden Verkäufer im Nash-Gleichgewicht wenn (im Gegensatz zur Aufgabenstellung) 60\% der Strandbesucher genau am linken Ende des Strandes liegen und 40\% genau am rechten Ende? Begründen Sie kurz Ihre Antwort. (6P)
+		\begin{proof}
+			Beide Verkäufer würden sich am linken Ende aufstellen, also $s_1 = s_2 = 0$ und sich wie oben wieder in Erwartung 50\% der Käufer teilen. Wir zeigen zuerst, dass dies ein Nash-Gleichgewicht ist und dann dass es kein weiteres mehr gibt. ~\smallskip
+			
+			 Angenommen ein Spieler würde von $s_1 = s_2 = 0$ abweichen wollen, z.B. Spieler 1 (d.h. $s_1 > 0$). Dann würden die 60\% am linken Rand echt näher bei Verkäufer 2 liegen und nur zu ihm gehen. Da die 40\% am rechten Rand nun echt näher an Verkäufer 1 sind, erhält er diese mit Sicherheit. Dies ist allerdings eine echte Verschlechterung zum ursprünglichen Marktanteil ist, und dies für beide Spieler gilt, ist $s_1 = s_2 = 0$ ein Nash-Gleichgewicht. Angenommen nur einer der Spieler steht am linken Rand, dann steht der andere weiter rechts und erhält  wie oben beschrieben nur die restlichen 40\%. Durch das Verschieben zum linken Rand würde er aber in Erwartung wieder 50\% erhalten. Angenommen beide sind nicht am linken Rand. Dann stehen sie entweder an der gleichen Stelle, d.h. durch Verschieben nach links würde man sich wieder von 50\% auf 60\% verbessern; oder sie stehen nebeneinander, der linke Verkäufer erhält aufgrund der Nähe alle am linken Rand, d.h. 60\% und der rechte die verbleibenden 40\%. Somit würde der rechte Verkäufer wieder zum linken Rand abweichen und sicher verbessern wollen. Somit ist $s_1 = s_2 = 0$ das einzige Nash-Gleichgewicht.
+		\end{proof}
+\end{enumerate}
+
+\newpage
+
+\subsection*{5. Markteintritt}
+
+Betrachten Sie das folgende in Extensivform beschriebene Markteintritts-Spiel mit den Spielern $E$ und $I$ und den Auszahlungen $u_E$, $u_I$
+
+\begin{figure}[htbp]
+	\centering
+	\begin{tikzpicture}[scale=1.5,font=\footnotesize]
+	% Specify spacing for each level of the tree
+	\tikzstyle{level 1}=[level distance=15mm,sibling distance=40mm]
+	\tikzstyle{level 2}=[level distance=15mm,sibling distance=22mm]
+	\tikzstyle{level 3}=[level distance=15mm,sibling distance=15mm]
+	% The Tree
+	\node(0)[hollow node,label=above:{$E$}]{}
+	child{node(1)[solid node,,label=left:{E}]{}
+		child{node(3)[solid node]{} 
+			child{node(4)[label=below:{$(1,1)$},yshift=2]{}}
+			child{node(5)[label=below:{$(2,0)$},yshift=2]{}}
+		edge from parent node[left]{$F$}}
+		child{node(6)[solid node]{} 
+			child{node(7)[label=below:{$(0,2)$},yshift=2]{}}
+			child{node(8)[label=below:{$(3,3)$},yshift=2]{}}		
+		edge from parent node[right]{$A$}}
+		edge from parent node[left,xshift=-7]{$In$}
+	}
+	child{node[label=below:{$(2,4)$},yshift=2]{} edge from parent node [right,xshift=7]{$Out$}}
+	;
+	% information set (from node 1 to node 2)
+	\draw[dashed,rounded corners=10]($(3) + (-.2,.25)$)rectangle($(6) +(.2,-.25)$);
+	% Highlighting a subgame in red (from node 7 to 8). Remove the code below if you don't want to highlight the subgame.
+	%\draw[dotted, thick, red, rounded corners=15]($(7) + (-.4,1.75)$)rectangle($(8) +(.4,-.5)$);
+	% specify mover at 2nd information set
+	\node at ($(3)!.5!(6)$) {$I$};
+	\end{tikzpicture}
+\end{figure}
+
+\begin{enumerate}[label=\alph*\upshape)]
+	\item Erklären Sie anhand des Beispiels kurz den Begriff \enquote{dynamisches Spiel}. (3P)
+		\begin{proof}
+			Bei einem dynamischen Spiel wählen die Spiele ihre Aktionen sequentiell, und haben damit die Möglichkeit auf die Aktionen anderer zu reagieren. Spieler 2 sieht, ob Spieler I $In$ oder $Out$ gespielt hat, er kann zwar nicht zwischen $F$ und $A$ unterscheiden, allerdings muss er nicht simultan mit $E$ spielen. D.h. aufgrund der Beobachtbarkeit ob $E$ in den Markt eingetreten ist oder eben nicht, und der dadurch möglichen sequentiellen Entscheidung, also ob er $F$ oder $A$ als Antwort auf $In$ spielen möchte, ist dies ein dynamisches Spiel.
+		\end{proof} ~\newpage
+		\textit{Beachte:	 Im Gegensatz zu Aufgabe 2 besitzt dieses Spiel zwei Teilspiele:}
+			
+\begin{figure}[htbp]
+	\centering
+	\begin{tikzpicture}[scale=1.5,font=\footnotesize]
+	% Specify spacing for each level of the tree
+	\tikzstyle{level 1}=[level distance=15mm,sibling distance=40mm]
+	\tikzstyle{level 2}=[level distance=15mm,sibling distance=22mm]
+	\tikzstyle{level 3}=[level distance=15mm,sibling distance=15mm]
+	% The Tree
+	\node(0)[hollow node,label=above:{$E$}]{}
+	child{node(1)[solid node,,label=left:{E}]{}
+		child{node(3)[solid node]{} 
+			child{node(4)[label=below:{$(1,1)$},yshift=2]{} edge from parent node[left]{$F$}}
+			child{node(5)[label=below:{$(2,0)$},yshift=2]{} edge from parent node[right]{$A$}}
+		edge from parent node[left]{$F$}}
+		child{node(6)[solid node]{} 
+			child{node(7)[label=below:{$(0,2)$},yshift=2]{}edge from parent node[left]{$F$}}
+			child{node(8)[label=below:{$(3,3)$},yshift=2]{}	edge from parent node[right]{$A$}}	
+		edge from parent node[right]{$A$}}
+		edge from parent node[left,xshift=-7]{$In$}
+	}
+	child{node(9)[label=below:{$(2,4)$},yshift=2]{} edge from parent node [right,xshift=7]{$Out$}}
+	;
+	% information set (from node 1 to node 2)
+	\draw[dashed,rounded corners=10]($(3) + (-.2,.25)$)rectangle($(6) +(.2,-.25)$);
+	% Highlighting a subgame in red (from node 7 to 8). Remove the code below if you don't want to highlight the subgame.
+	\draw[dotted, thick, red, rounded corners=15]($(1) + (-2.3,2)$)rectangle($(9) +(.4,-3.7)$);
+	\draw[dotted, thick, blue, rounded corners=15]($(3) + (-1.1,1.75)$)rectangle($(6) +(1.1,-2)$);
+	% specify mover at 2nd information set
+	\node at ($(3)!.5!(6)$) {$I$};
+	\end{tikzpicture}
+\end{figure}
+	\item Bestimmen Sie alle Nash-Gleichgewichte des kleinsten Teilspiels des Spiels. Verwenden Sie hierzu die Spielmatrix dieses Spiels.
+		\begin{proof}
+			Wir wissen, dass wir uns im kleinen Teilspiel befinden. Das heißt, es wurde von $E$ bereits $In$ gespielt. Die so erhaltene Spielmatrix ist
+						
+			\begin{center}
+				\begin{game}{2}{2}[E][I]
+					    & $F$     & $A$ \\
+	 				$F$ &  $1, 1$ & $2, 0$  \\
+	 				$A$ &  $0, 2$ & $3, 3$ \\
+				\end{game}
+			\end{center} ~\smallskip
+			
+			Wir ermitteln die besten Antworten und unterstreichen diese:
+			\begin{center}
+				\begin{game}{2}{2}[E][I]
+					    & $F$     & $A$ \\
+	 				$F$ &  \textbf{\underline{1}, \underline{1}} & $2, 0$  \\
+	 				$A$ &  $0, 2$ & \textbf{\underline{3}, \underline{3}} \\
+				\end{game}
+			\end{center} ~\smallskip
+			
+			Die Nash-Gleichgewichte im kleinen Teilspiel sind wieder die Strategie-Kombinationen bei denen beide Spieler die beste Antwort aufeinander spielen, also $(F, F)$ und $(A, A)$. ~\smallskip
+			
+			\textit{Auch hier ist es nicht ganz klar, ob nur reine Gleichgewichte gesucht sind.} Betrachtet man wieder die Gleichgewichtsbedingung für gemischte Gleichgewichte, wobei $p$ die Wahrscheinlichkeit ist, dass $E$ die Strategie $F$ spielt und $q$ die Wahrscheinlichkeit ist, dass $I$ die Strategie $F$ spielt, so folgt
+			$$ \mathbb{E}[u_1(F)] = 1 \cdot q + 2 \cdot (1 - q) = 0 \cdot q + 3 \cdot (1 - q) = \mathbb{E}[u_1(A)] \iff q = 0.5  $$
+			und aufgrund der Symmetrie folgt auch $p = 0.5$. Das heißt, das Nash-Gleichgewicht in gemischten Strategien ist
+			$$ \Big( \big(0.5, 0.5\big), \big(0.5, 0.5\big) \Big) $$
+			und die erwartete Auszahlung ist damit $(2.25, 1.75)$.	
+		\end{proof}
+	\item Bestimmen Sie alle Teilspielperfekten Nash-Gleichgewichte des Spiels. (4P)
+		\begin{proof}
+			Ein Teilspielperfektes Nash-Gleichgewicht muss auch im kleinen Spiel ein Gleichgewicht darstellen, es kommen für diesen Teil des Spieles also nur die Lösungen aus b) in Frage. Falls $E$ sich für $F$ entscheidet, so wird im Teilspiel $I$ mit $F$ antworten, damit bevorzugt $E$ aber aufgrund der höheren Auszahlung zuerst $Out$ zu spielen. Spielt allerdings $E$ im zweiten Schritt $A$, so antwortet $I$ mit $A$ und $E$ wird sich stets für $In$ entscheiden. Die reinen Teilspielperfektes Nash-Gleichgewicht demnach
+			$$ \Big(\big(Out, F\big), F \Big) \text{ und } \Big(\big(In, A\big), A \Big) $$
+			Betrachten wir noch das gemischte Nash-Gleichgewicht im Teilspiel, so lohnt es sich für $E$ die Strategie $In$ zu spielen, da er in Erwartung 2.25 anstatt 2 erhält und damit ist das letzte Teilspielperfektes Nash-Gleichgewicht
+			$$ \Big( \big(In, (0.5, 0.5) \big), \big(0.5, 0.5 \big) \Big) $$
+		\textit{Tipp: Der Gedanke hier ist, das Teilspiel durch die Nash-Gleichgewicht, also die Ergebnisse die im Teilspiel raus kommen können, zu ersetzen und im vereinfachten Spiel zu entscheiden, was für $E$ die besten Entscheidung ist. Außerdem lohnt es sich auch immer, im Nachhinein kurz zu überprüfen, ob nicht jemand doch durch einseitiges Abweichen sich besser stellen könnte. Das geht schnell und fängt Leichtsinnsfehler ab.}
+		\end{proof}
+	\item Nehmen Sie an, es handle sich hier - im Gegensatz zur Abbildung - um ein Spiel mit perfekter Information. Welche Lösung ergibt sich dann nach der Methode der Rückwärtsinduktion? (4P) ~\newpage
+		\begin{proof}
+			Angenommen es handelt sich um ein Spiel mit perfekter Information:
+			\begin{figure}[htbp]
+	\centering
+	\begin{tikzpicture}[scale=1.5,font=\footnotesize]
+	% Specify spacing for each level of the tree
+	\tikzstyle{level 1}=[level distance=15mm,sibling distance=40mm]
+	\tikzstyle{level 2}=[level distance=15mm,sibling distance=22mm]
+	\tikzstyle{level 3}=[level distance=15mm,sibling distance=15mm]
+	% The Tree
+	\node(0)[hollow node,label=above:{$E$}]{}
+	child{node(1)[solid node,,label=left:{E}]{}
+		child{node(3)[solid node]{} 
+			child{node(4)[label=below:{$(1,1)$},yshift=2]{} edge from parent node[left]{$F$}}
+			child{node(5)[label=below:{$(2,0)$},yshift=2]{} edge from parent node[right]{$A$}}
+		edge from parent node[left]{$F$}}
+		child{node(6)[solid node]{} 
+			child{node(7)[label=below:{$(0,2)$},yshift=2]{}edge from parent node[left]{$F$}}
+			child{node(8)[label=below:{$(3,3)$},yshift=2]{}	edge from parent node[right]{$A$}}	
+		edge from parent node[right]{$A$}}
+		edge from parent node[left,xshift=-7]{$In$}
+	}
+	child{node(9)[label=below:{$(2,4)$},yshift=2]{} edge from parent node [right,xshift=7]{$Out$}}
+	;
+	% information set (from node 1 to node 2)
+	%\draw[dashed,rounded corners=10]($(3) + (-.2,.25)$)rectangle($(6) +(.2,-.25)$);
+	% Highlighting a subgame in red (from node 7 to 8). Remove the code below if you don't want to highlight the subgame.
+	%\draw[dotted, thick, red, rounded corners=15]($(1) + (-2.3,2)$)rectangle($(9) +(.4,-3.7)$);
+	%\draw[dotted, thick, blue, rounded corners=15]($(3) + (-1.1,1.75)$)rectangle($(6) +(1.1,-2)$);
+	% specify mover at 2nd information set
+	\node at ($(3)!.5!(6)$) {$I$};
+	\end{tikzpicture}
+\end{figure}
+
+		Rückwärtsinduktion sucht in jedem der vier Teilspiele nach der besten Antwort und wir markieren die besten Antworten im Baum:
+			\begin{figure}[htbp]
+	\centering
+	\begin{tikzpicture}[scale=1.5,font=\footnotesize]
+	% Specify spacing for each level of the tree
+	\tikzstyle{level 1}=[level distance=15mm,sibling distance=40mm]
+	\tikzstyle{level 2}=[level distance=15mm,sibling distance=22mm]
+	\tikzstyle{level 3}=[level distance=15mm,sibling distance=15mm]
+	% The Tree
+	\node(0)[hollow node,label=above:{$E$}]{}
+	child{node(1)[solid node,,label=left:{E}]{}
+		child{node(3)[solid node]{} 
+			child{node(4)[label=below:{$(1,1)$},yshift=2]{} edge from parent node[left]{$F$} [double]}
+			child{node(5)[label=below:{$(2,0)$},yshift=2]{} edge from parent node[right]{$A$}}
+		edge from parent node[left]{$F$}}
+		child{node(6)[solid node]{} 
+			child{node(7)[label=below:{$(0,2)$},yshift=2]{}edge from parent node[left]{$F$}}
+			child{node(8)[double,label=below:{$(3,3)$},yshift=2]{}	edge from parent node[right]{$A$} [double]}	
+		edge from parent node[right]{$A$} [double]}
+		edge from parent node[left,xshift=-7]{$In$} [double]
+	}
+	child{node(9)[label=below:{$(1,3)$},yshift=2]{} edge from parent node [right,xshift=7]{$Out$}};
+	\node at ($(3)!.5!(6)$) {$I$};
+	\end{tikzpicture}
+\end{figure}		
+
+		Das heißt als Lösung der Rückwärtsinduktion ergibt sich mit perfekten Informationen
+		$$ \Big( \big( In, A \big), \big( (F, \text{ falls } F), (A, \text{ falls } A) \big)  \Big) $$
+		\textit{Beachte: hier musste $I$ für beide möglichen Fälle ($F$ und $A$) Strategien angeben. Bei der c) war durch den Informationsbezirk nur eine Strategie anzugeben, da der Spieler nicht zwischen $F$ und $A$ unterscheiden konnte.}
+		\end{proof}
+\end{enumerate}
+
+\newpage
+
+\subsection*{6. Statische Spiele}
+
+Gegeben ist das folgende statische Spiel in Normalformdarstellung.
+
+			\begin{center}
+				\begin{game}{2}{2}[Spieler 1][Spieler 2]
+					    & $l$     & $r$ \\
+	 				$L$ &  $1, 1$ & $3, 0$  \\
+	 				$R$ &  $3, 0$ & $1, 1$ \\
+				\end{game}
+			\end{center}
+
+\begin{enumerate}[label=\alph*\upshape)]
+	\item Hat das Spiel ein Nash-Gleichgewicht in reinen Strategien? (keine Begründung erforderlich) (2P)
+		\begin{proof}
+			Betrachten wir das Spiel:
+			
+			\begin{center}
+				\begin{game}{2}{2}[Spieler 1][Spieler 2]
+					    & $l$     & $r$ \\
+	 				$L$ &  $1, \underline{1}$ & $\underline{3}, 0$  \\
+	 				$R$ &  $\underline{3}, 0$ & $1, \underline{1}$ \\
+				\end{game}
+			\end{center}
+		
+			Das heißt hier gibt es kein Nash-Gleichgewicht in reinen Strategien.
+		\end{proof}
+	\item Berechnen Sie das Nash-Gleichgewicht in gemischten Strategien mit den Wahrscheinlichkeiten $p_L, p_R$ von Spieler 1 und $p_l, p_r$ von Spieler 2. (6P)
+		\begin{proof}
+			Da eine Strategie gespielt werden muss, wissen wir
+			$$ 1 = p_L + p_R \text{ und } 1 = p_l + p_r $$
+			In einem Nash-Gleichgewicht in gemischten Strategien muss ein Gleichgewicht zwischen dem erwarteten Nutzen herschen, also
+			$$ \mathbb{E}[u_1(L)] = \mathbb{E}[u_1(R)] \text{ und } \mathbb{E}[u_2(l)] = \mathbb{E}[u_2(r)] $$ 
+			Aufstellen dieser Gleichungen für Spieler 1 ergibt
+			\begin{align*}
+				\mathbb{E}[u_1(L)]  = 1 \cdot p_l + 3 \cdot p_r & = 3 \cdot p_l + 1 \cdot p_r = \mathbb{E}[u_1(R)] \\
+				\iff 2 \cdot p_r & = 2 \cdot p_l
+			\end{align*}
+			Einsetzen von $p_r = 1 - p_l$ ergibt
+			$$ 2 \cdot (1 - p_l) = 2 \cdot p_l \iff p_l = 0.5 $$
+			Aufstellen dieser Gleichungen für Spieler 2 ergibt
+			\begin{align*}
+				\mathbb{E}[u_2(l)]  = 1 \cdot p_L + 0 \cdot p_R & = 0 \cdot p_L + 1 \cdot p_R = \mathbb{E}[u_2(r)] \\
+				\iff 1 \cdot p_L & = 1 \cdot p_R
+			\end{align*}
+			Einsetzen von $p_R = 1 - p_L$ ergibt
+			$$ 1 \cdot p_L = 1 \cdot (1 - p_L) \iff p_L = 0.5 $$
+			Das einzige Nash-Gleichgewicht in diesem Spiel ist in gemischten Strategie bei der Wahrscheinlichkeitsverteilung (\textit{hier solltest du auf die Schreibweise deiner Vorlesung achten, das macht jeder Prof. anders})
+			$$ \left( (0.5, 0.5), (0.5, 0.5) \right) $$
+		\end{proof}
+	\item Ein Freund sagt zu Spieler 1: \textit{\enquote{So wie Spieler 2 im Nash-Gleichgewicht spielt, bist Du indifferent zwischen $L$ und $R$. Also ist es egal, ob Du randomisierst oder eine der Aktionen $L$ bzw. $R$ mit Wahrscheinlichkeit 1 spielst.}} Erläutern Sie kurz, ob Sie der Aussage des Freundes zustimmen oder nicht. (5P)
+		\begin{proof}
+			Betrachten wir, dass Spieler 2 wie im Nash-Gleichgewicht randomisiert, so ist die erwartete Auszahlung von den Spielern gegeben durch: 
+						
+			\begin{center}
+				\begin{game}{2}{1}[Spieler 1][Spieler 2]
+					    & $0.5 \cdot l + 0.5 \cdot r$   \\
+	 				$L$ &  $2, 0.5$ \\
+	 				$R$ &  $2, 0.5$  \\
+				\end{game}
+			\end{center}
+		
+			Das heißt, sowohl $L$ als auch $R$ ergeben die gleiche erwartete Auszahlung, gegeben dass Spieler 2 die Strategie $0.5 \cdot l + 0.5 \cdot r$ spielt und es ist egal, ob wir $L$ oder $R$ mit Sicherheit spielen. Wie allerdings in der a) besprochen, existiert kein Nash-Gleichgewicht in reinen Strategien für Spieler 1. Das heißt könnte Spieler 2 von seiner Gleichgewichtsstrategie abweichen, so würde er auf eine deterministische Strategie anders spielen.
+		\end{proof}
+\end{enumerate}
+
+\newpage
+
+\subsection*{7. Dynamische Spiele}
+
+\begin{enumerate}[label=\alph*\upshape)]
+	\item Erklären Sie kurz die Begriffe \enquote{Teilspiel} und \textit{Spiel mit perfekter Information}. (6P)
+		\begin{proof}
+			Ein Teilspiel ist ein Teil des Gesamtspiels, welche an einem deterministischen (d.h. nicht in einem Informationsbezirk), nicht-terminalen (d.h. nicht in einem Endknoten) Knoten beginnt, alle darauffolgenden Knoten umfasst und keine weiteren. Außerdem darf ein Teilspiel keinen Informationsbezirk durchschneiden, d.h. ist ein Knoten eines Informationsbezirk im Teilspiel, so muss auch jeder andere Knoten desselben Informationsbezirks im Teilspiel sein. ~\smallskip
+			
+			Ein Spiel mit perfekte Information besteht, wenn jedem Spieler zum Zeitpunkt einer Entscheidung stets das vorangegangene Spielgeschehen bekannt ist. Das bedeutet, dass die perfekte Information durch nur einelementige Informationsbezirke charakterisiert wird. Denn angenommen es gebe einen mehr als einelementigen Informationsbezirk, so würde der Spieler nicht zwischen den Knoten unterscheiden können und damit nicht definitiv sagen können, welche Aktion der Gegenspieler dorthin geführt hat.
+		\end{proof}
+	\item Nehmen Sie an, ein (dynamisches) Spiel habe kein Nash-Gleichgewicht in reinen Strategien. Kann es dann ein Teilspielperfektes Nash-Gleichgewicht in reinen Strategien haben? Begründen Sie kurz Ihre Antwort. (5P)
+		\begin{proof}
+			Nein, denn ein Teilspielperfektes Nash-Gleichgewicht muss in jedem Teilspiel ein Nash-Gleichgewicht darstellen. Da das Gesamtspiel selbst ein Teilspiel ist und es kein Nash-Gleichgewicht in reinen Strategien für das gesamte Spiel gibt, kann demnach kein Teilspielperfktes Nashgleichgewicht in reinen Strategien existieren.
+		\end{proof}
+	\item Nehmen Sie an, ein (dynamisches) Spiel mit perfekter Information habe zwei Nash-Gleichgewichte in reinen Strategien. Können dann diese Gleichgewichte auch immer mit der Methode der Rückwärtsinduktion gefunden werden? Begründen Sie kurz Ihre Antwort. (4P)
+		\begin{proof}
+			Nein, denn die Rückwärtsinduktion liefert nur Teilspielperfekte Nash Gleichgewichte. Da ein Nash-Gleichgewicht nicht teilspielperfekt sein muss, muss es nicht durch die Rückwärtsinduktion gefunden werden. ~\smallskip
+			
+			Ein Gegenbeispiel wäre zum Beispiel der Baum aus Aufgabe 5 d). Hier sind
+					$$ \left( (In, A), \left( (F, \text{ falls } F), (A, \text{ falls } A) \right)  \right)  \text{ und }\left( (In, A), \left( (A, \text{ falls } F), (A, \text{ falls } A) \right)  \right)   $$
+			beides Nash-Gleichgewichte, denn keiner der Spieler kann sich durch Abweichen in beiden Strategiekombinationen besser stellen. Allerdings ist $$ \left( (In, A), \left( (A, \text{ falls } F), (A, \text{ falls } A) \right)  \right) $$ nicht Teilspielperfekt und wurde auch in 5d) nicht durch die Rückwärtsinduktion gefunden. 
+		\end{proof}
+\end{enumerate}
+
+\newpage
+
+\subsection*{8. Statische Spiele bzw. Spiele in Normalformdarstellung}
+
+\begin{enumerate}[label=\alph*\upshape)]
+	\item Stellen Sie die Spielmatrix für ein Zwei-Personen-Spiel auf, bei dem die drei Lösungskonzepte \enquote{iterative Elimination strikt dominierter Strategien}, \enquote{Rationalisierbare Strategien} und \enquote{Nash-Gleichgewicht} alle zur gleichen Lösungsmenge führen. Geben Sie diese Lösungsmenge für Ihr Beispiel an. (5P)
+		\begin{proof}
+			\textit{Hier ein kleiner Hinweis: es lohnt sich immer bei so etwas nach dominanten Strategien zu suchen, denn oftmals vereinfachen sie die Betrachtung.} Betrachten wir das Spiel
+			
+			\begin{center}
+				\begin{game}{2}{2}[Spieler 1][Spieler 2]
+					    & $l$     & $r$ \\
+	 				$L$ &  $1, 1$ & $2, 2$ \\
+	 				$R$ &  $3, 3$ & $4, 4$
+				\end{game}
+			\end{center}
+			
+			Hier ist $R$ bzw. $r$ aufgrund der Dominanz stets die beste Antwort, d.h. $L$ und $l$ sind nie beste Antworten auf eine Strategie des Gegenspielers. Deren Eliminierung liefert die rationalisierbaren Strategien $(R, r)$:
+			
+			\begin{center}
+				\begin{game}{2}{2}[Spieler 1][Spieler 2]
+					    & \st{$l$}     & $r$ \\
+	 				\st{$L$} &  \st{$1, 1$} & \st{$2, 2$} \\
+	 				$R$ &  \st{$3, 3$} & $4, 4$
+				\end{game}
+			\end{center}
+			
+			Analog liefert die Eleminierung von strikt dominierten Strategien, dass $l$ von $r$ dominiert wird und $L$ von $R$ und es verbleibt $(R, r)$. Betrachtet man die Nash-Gleichgewichte, folgt das Gleiche aufgrund der Dominanz:
+
+			\begin{center}
+				\begin{game}{2}{2}[Spieler 1][Spieler 2]
+					    & $l$     & $r$ \\
+	 				$L$ &  $1, 1$ & $2, \underline{2}$ \\
+	 				$R$ &  $\underline{3}, 3$ & \textbf{\underline{4}, \underline{4}}
+				\end{game}
+			\end{center}		
+			Somit ist $(R, r)$ das einzige Nash-Gleichgewicht, ist die einzige rationalisierbare Strategie und überlebt als Einziges die interativerElemination strikt dominierter Strategien.	
+		\end{proof}
+	\item Ein Dozent sagt: \textit{Spielerinnen, die keine Nash-Gleichgewichtsstrategie spielen, verhalten sich nicht rational.} Stimmen Sie dieser Aussage zu? Begründen Sie kurz Ihre Antwort. (5P)
+		\begin{proof}
+			Dies trifft im Allgemeinen nicht zu. Falls wir zum Beispiel eine Einschätzung über den Gegenspieler haben, dass dieser nicht rational spielt, zum Beispiel über eine nicht glaubwürdige Drohung oder eine dominierte Strategie spielt, so kann die beste Antwort zu einem nicht-Nash-Gleichgewicht führen. Ein Nash-Gleichgewicht besagt lediglich, dass sobald es Eingetreten ist, kein rationaler Spieler mehr abweichen würde und nicht, dass rationale Spieler stets dies Spiel würden; dies ist nur der Fall bei dominanten Strategien.
+		\end{proof}
+	\item Betrachten Sie eine Spielerin mit mindestens drei reinen Strategien. Ist dann die folgende Aussage richtig oder falsch? \textit{Wenn die reine Strategie $s_{il}$ die reine Strategie $s_{ik}$ strikt dominiert, dann spielt die Spielerin im Nash-Gleichgewicht die Strategie $s_{il}$ immer mit positiver Wahrscheinlichkeit $p_{il} > 0$.} Geben Sie eine kurze Begründung Ihrer Antwort. (5P)
+		\begin{proof}
+			Dies ist im Allgemeinen falsch. Das einfachste Gegenbeispiel wäre wahrscheinlich die dritte Wahrscheinlichkeit $s_{im}$ die Strategie $s_{il}$ dominieren zu lassen. Das heißt $s_{il}$ dominiert $s_{ik}$ strikt und $s_{im}$ dominiert $s_{il}$. strikt  Wie in obigen Aufgaben schon ein paar Mal besprochen, würde der Spieler nun nie $s_{il}$ sondern die Dominante $s_{im}$ spielen. Das heißt auch in gemischten Strategien wird $s_{il}$ nie mit positiver Wahrscheinlich nicht gespielt, da die erwartete Auszahlung mit $s_{im}$ strikt größer ist. 
+			\begin{center}
+				\begin{game}{3}{2}[Spieler 1][Spieler 2]
+					    & $l$     & $r$ \\
+	 				$s_{ik}$ &  $1, 5$ & $1, 3$ \\
+	 				$s_{il}$ &  $3, 5$ & $3, 3$ \\
+	 				$s_{im}$ &  $5, 5$ & $5, 3$
+				\end{game}
+			\end{center}	~\smallskip
+						
+			Ein etwas komplizierteres Beispiel wäre:
+			
+			\begin{center}
+				\begin{game}{3}{2}[Spieler 1][Spieler 2]
+					    & $l$     & $r$ \\
+	 				$s_{ik}$ &  $1, 5$ & $2, 3$ \\
+	 				$s_{il}$ &  $2, 5$ & $3, 3$ \\
+	 				$s_{im}$ &  $3, 5$ & $2, 3$
+				\end{game}
+			\end{center}	
+			
+			Hier dominiert $s_{il}$ wie gefordert $s_{ik}$, allerdings ist zwischen $s_{im}$ und $s_{il}$ a-priori keine Aussage möglich. Allerdings wird Spieler 2 stets $l$ spielen, da dies seine dominante Strategie ist. Somit wird in keinem Nash-Gleichgewicht $s_{il}$ von Spieler 1 gespielt werden, da $s_{im}$ die beste Antwort auf $l$ ist. Also wird auch hier $s_{il}$ nicht mit positiver Wahrscheinlichkeit gespielt.
+		\end{proof}
+\end{enumerate}
+
+\newpage
+
+\subsection*{9. Dynamische Spiele}
+
+Betrachten Sie das folgende in Extensivform beschriebene dynamische Spiel mit den Spielerinnen 1, 2 und 3 und den Auszahlungen $u_1$, $u_2$, $u_3$.
+
+			\begin{figure}[htbp]
+	\centering
+	\begin{tikzpicture}[scale=1.25,font=\footnotesize]
+	% Specify spacing for each level of the tree
+	\tikzstyle{level 1}=[level distance=15mm,sibling distance=40mm]
+	\tikzstyle{level 2}=[level distance=15mm,sibling distance=22mm]
+	\tikzstyle{level 3}=[level distance=15mm,sibling distance=10mm]
+	% The Tree
+	\node(0)[hollow node,label=above:{$1$}]{}
+	child{node(1)[solid node,label=left:{2}]{}
+		child{node(3)[solid node]{} 
+			child{node(4)[label=below:{$\begin{pmatrix} 2 \\ 2 \\ 1 \end{pmatrix}$},yshift=2]{} edge from parent node[left]{$c$}}
+			child{node(5)[label=below:{$\begin{pmatrix} 2 \\ 2 \\ 2 \end{pmatrix}$},yshift=2]{} edge from parent node[right]{$d$}}
+		edge from parent node[left]{$a$}}
+		child{node(6)[solid node]{} 
+			child{node(7)[label=below:{$\begin{pmatrix} 2 \\ 3 \\ 2 \end{pmatrix}$},yshift=2]{}edge from parent node[left]{$c$}}
+			child{node(8)[label=below:{$\begin{pmatrix} 2 \\ 3 \\ 1 \end{pmatrix}$},yshift=2]{}	edge from parent node[right]{$d$}}	
+		edge from parent node[right]{$b$}}
+		edge from parent node[left,xshift=-7]{$L$}
+	}
+	child{node(9)[solid node,label=left:{2}]{}
+		child{node(10)[solid node]{} 
+			child{node(11)[label=below:{$\begin{pmatrix} 1 \\ 3 \\ 1 \end{pmatrix}$},yshift=2]{} edge from parent node[left]{$c$}}
+			child{node(12)[label=below:{$\begin{pmatrix} 2 \\ 3 \\ 2 \end{pmatrix}$},yshift=2]{} edge from parent node[right]{$d$}}
+		edge from parent node[left]{$a$}}
+		child{node(13)[solid node]{} 
+			child{node(14)[label=below:{$\begin{pmatrix} 1 \\ 4 \\ 2 \end{pmatrix}$},yshift=2]{}edge from parent node[left]{$c$}}
+			child{node(15)[label=below:{$\begin{pmatrix} 2 \\ 3 \\ 1 \end{pmatrix}$},yshift=2]{}	edge from parent node[right]{$d$}}	
+		edge from parent node[right]{$b$}}
+		edge from parent node[right,xshift=7]{$R$}
+	}
+	;
+	% information set (from node 1 to node 2)
+	\draw[dashed,rounded corners=10]($(3) + (-.2,.25)$)rectangle($(6) +(.2,-.25)$);
+	% Highlighting a subgame in red (from node 7 to 8). Remove the code below if you don't want to highlight the subgame.
+	%\draw[dotted, thick, red, rounded corners=15]($(1) + (-2.3,2)$)rectangle($(9) +(.4,-3.7)$);
+	%\draw[dotted, thick, blue, rounded corners=15]($(3) + (-1.1,1.75)$)rectangle($(6) +(1.1,-2)$);
+	% specify mover at 2nd information set
+	\node at ($(3)!.5!(6)$) {$3$};
+	\node at ($(10)!.5!(13)$) {$3$};
+	\end{tikzpicture}
+\end{figure}
+
+\begin{enumerate}[label=\alph*\upshape)]
+	\item Wieviele Teilspiele hat das Spiel? (2P)
+		\begin{proof}
+			Es ergeben sich 5 Teilspiele:
+						\begin{figure}[htbp]
+	\centering
+	\begin{tikzpicture}[scale=1.25,font=\footnotesize]
+	% Specify spacing for each level of the tree
+	\tikzstyle{level 1}=[level distance=15mm,sibling distance=40mm]
+	\tikzstyle{level 2}=[level distance=15mm,sibling distance=22mm]
+	\tikzstyle{level 3}=[level distance=15mm,sibling distance=10mm]
+	% The Tree
+	\node(0)[hollow node,label=above:{$1$}]{}
+	child{node(1)[solid node,label=left:{2}]{}
+		child{node(3)[solid node]{} 
+			child{node(4)[label=below:{$\begin{pmatrix} 2 \\ 2 \\ 1 \end{pmatrix}$},yshift=2]{} edge from parent node[left]{$c$}}
+			child{node(5)[label=below:{$\begin{pmatrix} 2 \\ 2 \\ 2 \end{pmatrix}$},yshift=2]{} edge from parent node[right]{$d$}}
+		edge from parent node[left]{$a$}}
+		child{node(6)[solid node]{} 
+			child{node(7)[label=below:{$\begin{pmatrix} 2 \\ 3 \\ 2 \end{pmatrix}$},yshift=2]{}edge from parent node[left]{$c$}}
+			child{node(8)[label=below:{$\begin{pmatrix} 2 \\ 3 \\ 1 \end{pmatrix}$},yshift=2]{}	edge from parent node[right]{$d$}}	
+		edge from parent node[right]{$b$}}
+		edge from parent node[left,xshift=-7]{$L$}
+	}
+	child{node(9)[solid node,label=left:{2}]{}
+		child{node(10)[solid node]{} 
+			child{node(11)[label=below:{$\begin{pmatrix} 1 \\ 3 \\ 1 \end{pmatrix}$},yshift=2]{} edge from parent node[left]{$c$}}
+			child{node(12)[label=below:{$\begin{pmatrix} 2 \\ 3 \\ 2 \end{pmatrix}$},yshift=2]{} edge from parent node[right]{$d$}}
+		edge from parent node[left]{$a$}}
+		child{node(13)[solid node]{} 
+			child{node(14)[label=below:{$\begin{pmatrix} 1 \\ 4 \\ 2 \end{pmatrix}$},yshift=2]{}edge from parent node[left]{$c$}}
+			child{node(15)[label=below:{$\begin{pmatrix} 2 \\ 3 \\ 1 \end{pmatrix}$},yshift=2]{}	edge from parent node[right]{$d$}}	
+		edge from parent node[right]{$b$}}
+		edge from parent node[right,xshift=7]{$R$}
+	}
+	;
+	% information set (from node 1 to node 2)
+	\draw[dashed,rounded corners=10]($(3) + (-.2,.25)$)rectangle($(6) +(.2,-.25)$);
+	% Highlighting a subgame in red (from node 7 to 8). Remove the code below if you don't want to highlight the subgame.
+	\draw[dotted, thick, red, rounded corners=15]($(3) + (-0.77,1.6)$)rectangle($(6) +(.77,-2.775)$);
+	\draw[dotted, thick, blue, rounded corners=15]($(10) + (-0.77,1.6)$)rectangle($(13) +(.77,-2.775)$);
+	\draw[dotted, thick, green, rounded corners=15]($(13) + (-0.72,0.15)$)rectangle($(15) +(.225,-1.3)$);
+	\draw[dotted, thick, yellow, rounded corners=15]($(10) + (-0.72,0.15)$)rectangle($(12) +(.225,-1.3)$);
+	\draw[dotted, thick, black, rounded corners=15]($(1) + (-2,2)$)rectangle($(15) +(.5,-2.1)$);
+	% specify mover at 2nd information set
+	\node at ($(3)!.5!(6)$) {$3$};
+	\node at ($(10)!.5!(13)$) {$3$};
+	\end{tikzpicture}
+\end{figure}
+		\end{proof}
+	\item Wieviele verschiedene Strategien haben hier die Spielerinnen 2 und 3? (4P)
+		\begin{proof}
+			Spielerin 2 hat vier Strategien. Sie hat zwei Möglichkeiten falls $L$ gespielt wird un zwei falls $R$ gespielt wird. Achte drauf, dass eine Strategie ein vollständiger Handlungsplan ist, d.h. die Strategien sind
+		$$	\big(a \text{ falls } L, a \text{ falls } R\big), ~ \big( a \text{ falls } L, b \text{ falls } R\big), ~ \big(b \text{ falls } L, a \text{ falls } R\big) $$
+		$$ \text{ und }  ~ \big(b \text{ falls } L, b \text{ falls } R\big) $$
+		Analog hat Spielerin 3 insgesamt 8 Möglichkeiten. Falls $R$ eintritt, muss sie sowohl für $a$ als auch für $b$ eine Handlungsstrategie angeben und falls $L$ gespielt wird kann sie nicht zwischen $a$ und $b$ unterscheiden und gibt unabhängig davon entweder $c$ oder $d$ an, d.h. die Strategien sind
+		$$ \big( d, \text{ falls } L, c \text{ falls } (R, a), c \text{ falls } (R, b) \big), ~ \big( c, \text{ falls } L, d \text{ falls } (R, a), c \text{ falls } (R, b) \big), $$
+		$$ \big( c, \text{ falls } L, c \text{ falls } (R, a), d \text{ falls } (R, b) \big), ~ \big( d, \text{ falls } L, d \text{ falls } (R, a), c \text{ falls } (R, b) \big), $$
+		$$  \big( d, \text{ falls } L, c \text{ falls } (R, a), d \text{ falls } (R, b) \big), ~ \big( c, \text{ falls } L, d \text{ falls } (R, a), d \text{ falls } (R, b) \big), ~  $$
+		$$  \big( c, \text{ falls } L, c \text{ falls } (R, a), c \text{ falls } (R, b) \big), ~ \big( d, \text{ falls } L, d \text{ falls } (R, a), d \text{ falls } (R, b) \big)  $$
+		\end{proof}
+	\item Bestimmen Sie das Teilspielperfekte Nash-Gleichgewicht des Spiels. Erklären Sie dabei stichwortartig Ihre Vorgehensweise. (9P).
+	\begin{proof}
+		Durch Rückwärtsinduktion untersuchen wir erst einmal den rechten Teil des Spiels:
+		
+\begin{figure}[htbp]
+	\centering
+	\begin{tikzpicture}[scale=1.25,font=\footnotesize]
+	% Specify spacing for each level of the tree
+	\tikzstyle{level 1}=[level distance=15mm,sibling distance=40mm]
+	\tikzstyle{level 2}=[level distance=15mm,sibling distance=22mm]
+	\tikzstyle{level 3}=[level distance=15mm,sibling distance=10mm]
+	% The Tree
+	\node(0)[hollow node,label=above:{$1$}]{}
+	child{node(1)[solid node,label=left:{2}]{}
+		child{node(3)[solid node]{} 
+			child{node(4)[label=below:{$\begin{pmatrix} 2 \\ 2 \\ 1 \end{pmatrix}$},yshift=2]{} edge from parent node[left]{$c$}}
+			child{node(5)[label=below:{$\begin{pmatrix} 2 \\ 2 \\ 2 \end{pmatrix}$},yshift=2]{} edge from parent node[right]{$d$}}
+		edge from parent node[left]{$a$}}
+		child{node(6)[solid node]{} 
+			child{node(7)[label=below:{$\begin{pmatrix} 2 \\ 3 \\ 2 \end{pmatrix}$},yshift=2]{}edge from parent node[left]{$c$}}
+			child{node(8)[label=below:{$\begin{pmatrix} 2 \\ 3 \\ 1 \end{pmatrix}$},yshift=2]{}	edge from parent node[right]{$d$}}	
+		edge from parent node[right]{$b$}}
+		edge from parent node[left,xshift=-7]{$L$}
+	}
+	child{node(9)[solid node,label=left:{2}]{}
+		child{node(10)[solid node]{} 
+			child{node(11)[label=below:{$\begin{pmatrix} 1 \\ 3 \\ 1 \end{pmatrix}$},yshift=2]{} edge from parent node[left]{$c$}}
+			child{node(12)[label=below:{$\begin{pmatrix} 2 \\ 3 \\ 2 \end{pmatrix}$},yshift=2]{} edge from parent node[right]{$d$}[double]}
+		edge from parent node[left]{$a$}}
+		child{node(13)[solid node]{} 
+			child{node(14)[label=below:{$\begin{pmatrix} 1 \\ 4 \\ 2 \end{pmatrix}$},yshift=2]{}edge from parent node[left]{$c$}[double]}
+			child{node(15)[label=below:{$\begin{pmatrix} 2 \\ 3 \\ 1 \end{pmatrix}$},yshift=2]{}	edge from parent node[right]{$d$}}	
+		edge from parent node[right]{$b$}[double]}
+		edge from parent node[right,xshift=7]{$R$}
+	}
+	;
+	% information set (from node 1 to node 2)
+	\draw[dashed,rounded corners=10]($(3) + (-.2,.25)$)rectangle($(6) +(.2,-.25)$);
+	% Highlighting a subgame in red (from node 7 to 8). Remove the code below if you don't want to highlight the subgame.
+	% specify mover at 2nd information set
+	\node at ($(3)!.5!(6)$) {$3$};
+	\node at ($(10)!.5!(13)$) {$3$};
+	\end{tikzpicture}
+\end{figure}
+
+		Da der rechte Teil des Spiels unter vollständigen Informationen verläuft, muss jedes Teilspielperfekte Nash-Gleichgewicht durch die Rückwärtsinduktion gefunden werden. Wir haben oben der Übersichtlichkeit halber den Baum reduziert und benutzten dass (1, 4, 2) der teilspielperfekte Ausgang bei $R$ sein wird.
+		
+		
+\begin{figure}[htbp!]
+	\centering
+	\begin{tikzpicture}[scale=0.9,font=\footnotesize]
+	% Specify spacing for each level of the tree
+	\tikzstyle{level 1}=[level distance=15mm,sibling distance=40mm]
+	\tikzstyle{level 2}=[level distance=15mm,sibling distance=22mm]
+	\tikzstyle{level 3}=[level distance=15mm,sibling distance=10mm]
+	% The Tree
+	\node(0)[hollow node,label=above:{$1$}]{}
+	child{node(1)[solid node,label=left:{2}]{}
+		child{node(3)[solid node]{} 
+			child{node(4)[label=below:{$\begin{pmatrix} 2 \\ 2 \\ 1 \end{pmatrix}$},yshift=2]{} edge from parent node[left]{$c$}}
+			child{node(5)[label=below:{$\begin{pmatrix} 2 \\ 2 \\ 2 \end{pmatrix}$},yshift=2]{} edge from parent node[right]{$d$}}
+		edge from parent node[left]{$a$}}
+		child{node(6)[solid node]{} 
+			child{node(7)[label=below:{$\begin{pmatrix} 2 \\ 3 \\ 2 \end{pmatrix}$},yshift=2]{}edge from parent node[left]{$c$}}
+			child{node(8)[label=below:{$\begin{pmatrix} 2 \\ 3 \\ 1 \end{pmatrix}$},yshift=2]{}	edge from parent node[right]{$d$}}	
+		edge from parent node[right]{$b$}}
+		edge from parent node[left,xshift=-7]{$L$}
+	}
+	child{node(9)[solid node]{}
+		edge from parent node[xshift=15,label=right:{$\begin{pmatrix} 1 \\ 4 \\ 2 \end{pmatrix}$}]{$R$}
+	}
+	;
+	% information set (from node 1 to node 2)
+	\draw[dashed,rounded corners=10]($(3) + (-.2,.25)$)rectangle($(6) +(.2,-.25)$);
+	% Highlighting a subgame in red (from node 7 to 8). Remove the code below if you don't want to highlight the subgame.
+	% specify mover at 2nd information set
+	\node at ($(3)!.5!(6)$) {$3$};
+	\end{tikzpicture}
+\end{figure}
+
+	Da allerdings Spielerin 1 falls sie $L$ spielt auf jeden Fall 2 erhält, wird sie nie $R$ spielen wollen. Unter $L$ ist für Spielerin 2 $b$ strikt dominant, d.h. unabhängig davon was Spielerin 3 in diesem Fall machen würde, es wird $L$ und $b$ gespielt. Wieder reduzieren wir der Übersichtlichkeit halber:
+	
+								\begin{figure}[htbp]
+	\centering
+	\begin{tikzpicture}[scale=0.9,font=\footnotesize]
+	% Specify spacing for each level of the tree
+	\tikzstyle{level 1}=[level distance=15mm,sibling distance=40mm]
+	\tikzstyle{level 2}=[level distance=15mm,sibling distance=22mm]
+	\tikzstyle{level 3}=[level distance=15mm,sibling distance=10mm]
+	% The Tree
+	\node(0)[hollow node,label=above:{$1$}]{}
+	child{node(1)[solid node,label=left:{2}]{}
+		child{node(6)[solid node]{} 
+			child{node(7)[label=below:{$\begin{pmatrix} 2 \\ 3 \\ 2 \end{pmatrix}$},yshift=2]{}edge from parent node[left]{$c$}}
+			child{node(8)[label=below:{$\begin{pmatrix} 2 \\ 3 \\ 1 \end{pmatrix}$},yshift=2]{}	edge from parent node[right]{$d$}}	
+		edge from parent node[right]{$b$}}
+		edge from parent node[left,xshift=-7]{$L$}
+	}
+	child{node(9)[solid node]{}
+		edge from parent node[xshift=15,label=right:{$\begin{pmatrix} 1 \\ 4 \\ 2 \end{pmatrix}$}]{$R$}
+	}
+	;
+	% Highlighting a subgame in red (from node 7 to 8). Remove the code below if you don't want to highlight the subgame.
+	% specify mover at 2nd information set
+	\node at ($(3)!.5!(6)$) {$3$};
+	\end{tikzpicture}
+\end{figure}
+	
+	 Die beste Antwort von Spielerin 3 ist in diesem Fall $c$. Aufgrund der Dominanz reduziert sich das Spiel also schön und das eindeutige Teilspielperfekte Nash-Gleichgewicht ist:
+	 $$ \Big( L, \big( b \text{ falls } L, b \text{ falls } R \big), \big( c \text{ falls } L, d \text{ falls } (R, a), c \text{ falls } (R, b) \big) \Big) $$
+	\end{proof}
+\end{enumerate}
+
+\newpage
+
+\subsection*{10. Signalspiele}
+
+Betrachten Sie das folgende Signalspiel, in dem die Spielerin \textit{Sender} (S) mit Wahrscheinlichkeit $\pi$ vom Typ $t_1$ und sonst vom Typ $t_2$ ist. Die Spielerin \textit{Empfänger} (E) beobachtet die Aktion $L$ bzw. $R$ vom Sender, nicht aber deren Typ. Sie kann daher nur eine Erwartung $p$ beziehungsweise $q$ bezüglich der Wahrscheinlichkeit des Auftretens der jeweiligen Entscheidungsknoten bilden.
+
+\begin{figure}[h!]
+	\centering
+\begin{tikzpicture}[scale=1.4,font=\footnotesize]
+\tikzset{
+% Two node styles for game trees: solid and hollow
+solid node/.style={circle,draw,inner sep=1.5,fill=black},
+hollow node/.style={circle,draw,inner sep=1.5}
+}
+
+% Specify spacing for each level of the tree
+\tikzstyle{level 1}=[level distance=12mm,sibling distance=25mm]
+\tikzstyle{level 2}=[level distance=15mm,sibling distance=15mm]
+\tikzstyle{level 3}=[level distance=17mm,sibling distance=10mm]
+% The Tree
+\node(0)[solid node,label=right:{Natur}]{}
+child[grow=up]{node[solid node,label=above:{\begin{tabular}{c}
+Sender\\ $t=t_1$
+\end{tabular}}] {}
+child[grow=left]{node(1)[solid node,label=below:{$[p]$}]{}
+child{node[hollow node,label=left:{$(2,1)$}]{} edge from parent node [above]{$U$}}
+child{node[hollow node,label=left:{$(1,3)$}]{} edge from parent node [below]{$D$}}
+edge from parent node [above]{$L$}
+}
+child[grow=right]{node(3)[solid node,label=below:{$[q]$}]{}
+child{node[hollow node,label=right:{$(0,0)$}]{} edge from parent node [below]{$D$}}
+child{node[hollow node,label=right:{$(2,2)$}]{} edge from parent node [above]{$U$}}
+edge from parent node [above]{$R$}
+}
+edge from parent node [right]{$[\pi]$}
+}
+child[grow=down]{node[solid node,label=below:{\begin{tabular}{c}
+Sender\\ $t=t_2$
+\end{tabular}}] {}
+child[grow=left]{node(2)[solid node,label=above:{$[1-p]$}]{}
+child{node[hollow node,label=left:{$(1,1)$}]{} edge from parent node [above]{$U$}}
+child{node[hollow node,label=left:{$(0,3)$}]{} edge from parent node [below]{$D$}}
+edge from parent node [above]{$L$}
+}
+child[grow=right]{node(4)[solid node,label=above:{$[1-q]$}]{}
+child{node[hollow node,label=right:{$(0,0)$}]{} edge from parent node [below]{$D$}}
+child{node[hollow node,label=right:{$(2,2)$}]{} edge from parent node [above]{$U$}}
+edge from parent node [above]{$R$}
+}
+edge from parent node [right]{$[1 - \pi]$}
+};
+
+% information set
+\draw[dashed,rounded corners=10]($(1) + (-.45,.45)$)rectangle($(2) +(.45,-.45)$);
+\draw[dashed,rounded corners=10]($(3) + (-.45,.45)$)rectangle($(4) +(.45,-.45)$);
+% specify mover at 2nd information set
+\node at ($(1)!.5!(2)$) {Empfänger};
+\node at ($(3)!.5!(4)$) {Empfänger};
+\end{tikzpicture}
+\end{figure}
+
+\begin{enumerate}[label=\alph*\upshape)]
+	\item Wie viele verschiedene Strategien hat die Spielerin \textit{Empfänger} in diesem Spiel? (3P)
+		\begin{proof}
+			Die Spielerin \textit{Empfänger} hat 4 Strategien in diesem Spiel. Sie beobachtet nur $L$ oder $R$ und kann nichts über den Typ von \textit{Sender} aussagen. Sie muss also sowohl für $L$ als auch für $R$ unabhängig vom Typ eine von zwei Strategien auswählen, das macht
+			$$ 2 \cdot 2 = 4 $$
+			mögliche Strategien. Diese lauten:
+			$$ \big( U \text{ falls } L, U \text{ falls } R \big), ~ \big( D \text{ falls } L, U \text{ falls } R \big), $$
+			$$ ~ \big( U \text{ falls } L, D \text{ falls } R \big), \big( D \text{ falls } L, D \text{ falls } R \big) $$
+		\end{proof}
+	\item Erklären Sie kurz, warum hier nur die Strategie $(D \text{ wenn } L, U \text{ wenn } R)$ der Spielerin Empfänger sequentiell rational ist. (4P)
+		\begin{proof}
+			Eine Einschätzung ist sequentiell rational, falls die von einer Spielerin gewählten Strategien an jeder Informationsmenge optimal sind angesichts der Einschätzungen der anderen Spielerin(nen). Hier sind allerdings die Strategien $U$ falls $R$ und $D$ falls $L$ dominant für Spielerin 2. Das heißt unabhängig von der Einschätzung über den Sender wird für den Empfänger stets $U$ falls $R$ und $D$ falls $L$ optimal sein. Nach Definition ist also 
+			$$(D \text{ wenn } L, U \text{ wenn } R)$$
+			die einzige sequentiell rationale Strategie.
+		\end{proof}
+	\item Geben Sie das Perfekt-Bayesianische Nash-Gleichgewicht des Spiels an. (6P)
+		\begin{proof}
+			Jedes Perfekt-Bayesianische Nash-Gleichgewicht muss sequentiell rational sein \textit{(da sonst unglaubwürdige Drohungen zugelassen werden)}. Das heißt Empfänger wird in einem PBNG stets $(D \text{ wenn } L, U \text{ wenn } R)$ spielen. Damit wird allerdings Sender bei $R$ immer die Auszahlung 2 erhalten und bei $L$ falls $t = t_1$ nur 1 und falls $t = t_2$ sogar nur 0. Damit Spieler 1 nicht abweichen möchte, wird sie also immer $R$ spielen, unabhängig vom Typ und Spielerin 2 wird darauf ihre dominante Strategie spielen:
+			$$ \Big( \big(R \text{ falls } t = t_1, R \text{ falls } t = t_2 \big), \big( U \text{ falls } R, D \text{ falls } L \big) \Big) $$
+		\end{proof}
+	\item Nehmen Sie an, es handle sich hier - im Gegensatz zur Abbildung - um ein Spiel mit perfekter Information. Welche Lösung ergibt sich dann nach der Methode der Rückwärtsinduktion? (4P)
+		\begin{proof}
+			Wir markieren wieder durch Rückwärtsinduktion die besten Antworten
+			\begin{figure}[h!]
+	\centering
+\begin{tikzpicture}[scale=1.4,font=\footnotesize]
+\tikzset{
+% Two node styles for game trees: solid and hollow
+solid node/.style={circle,draw,inner sep=1.5,fill=black},
+hollow node/.style={circle,draw,inner sep=1.5}
+}
+
+% Specify spacing for each level of the tree
+\tikzstyle{level 1}=[level distance=12mm,sibling distance=25mm]
+\tikzstyle{level 2}=[level distance=15mm,sibling distance=15mm]
+\tikzstyle{level 3}=[level distance=17mm,sibling distance=10mm]
+% The Tree
+\node(0)[solid node,label=right:{Natur}]{}
+child[grow=up]{node[solid node,label=above:{\begin{tabular}{c}
+Sender\\ $t=t_1$
+\end{tabular}}] {}
+child[grow=left]{node(1)[solid node,label=below:{$[p]$}]{}
+child{node[hollow node,label=left:{$(2,1)$}]{} edge from parent node [above]{$U$}}
+child{node[hollow node,label=left:{$(1,3)$}]{} edge from parent node [below]{$D$}[double]}
+edge from parent node [above]{$L$}
+}
+child[grow=right]{node(3)[solid node,label=below:{$[q]$}]{}
+child{node[hollow node,label=right:{$(0,0)$}]{} edge from parent node [below]{$D$}}
+child{node[hollow node,label=right:{$(2,2)$}]{} edge from parent node [above]{$U$}[double]}
+edge from parent node [above]{$R$}[double]
+}
+edge from parent node [right]{$[\pi]$}
+}
+child[grow=down]{node[solid node,label=below:{\begin{tabular}{c}
+Sender\\ $t=t_2$
+\end{tabular}}] {}
+child[grow=left]{node(2)[solid node,label=above:{$[1-p]$}]{}
+child{node[hollow node,label=left:{$(1,1)$}]{} edge from parent node [above]{$U$}}
+child{node[hollow node,label=left:{$(0,3)$}]{} edge from parent node [below]{$D$}[double]}
+edge from parent node [above]{$L$}
+}
+child[grow=right]{node(4)[solid node,label=above:{$[1-q]$}]{}
+child{node[hollow node,label=right:{$(0,0)$}]{} edge from parent node [below]{$D$}}
+child{node[hollow node,label=right:{$(2,2)$}]{} edge from parent node [above]{$U$}[double]}
+edge from parent node [above]{$R$}[double]
+}
+edge from parent node [right]{$[1 - \pi]$}
+};
+
+% specify mover at 2nd information set
+\node at ($(1)!.5!(2)$) {Empfänger};
+\node at ($(3)!.5!(4)$) {Empfänger};
+\end{tikzpicture}
+\end{figure}
+
+			Es stellt sich aber dabei das gleiche Ergebnis wie in der c) ein. Dies sollte nicht verwundern, da die Strategien von Empfänger dominant sind, also unabhängig von möglichen Informationen statt fanden - sie wird sich immer für $U$ bzw. $D$ entscheiden auch mit perfekten Informationen - und somit kann Sender ihre Entscheidung genau so treffen.
+		\end{proof}
+\end{enumerate}
+
+\end{document}
