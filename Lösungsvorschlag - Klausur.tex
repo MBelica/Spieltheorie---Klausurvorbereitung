@@ -25,7 +25,7 @@
 \usetikzlibrary{trees, calc}
 
 \author{Martin Belica}
-\title{Lösungsvorschlag - Klausur}
+\title{Lösungsvorschlag - Spieltheorie-Klausur}
 
 \hypersetup{colorlinks=true, linktoc=all, linkcolor=blue}
 \renewcommand*{\proofname}{Lösungsvorschlag}
@@ -34,6 +34,17 @@
 
 
 \begin{document} 
+
+\begin{titlepage}
+	\center \large
+	{~} \\[2cm]
+	{\Large Lösungsvorschlag - Spieltheorie-Klausur} \\[0.5cm]
+	{Spieltheorie - WS2017} \\[16cm]
+	 
+	{\normalsize Martin Belica} \\
+	{\scriptsize Die hier präsentierten Lösungen hier sind alle ohne Gewähr, nach bestem Wissen, Gewissen und Sorgfalt erstellt und sollen lediglich als Hinweis für die Lösung dienen.}
+		
+\end{titlepage}
 
 \subsection*{1. Statische Spiele}
 Gegeben sie das folgende statische Spiel in Normalform
@@ -274,19 +285,21 @@ Zwei Eisverkäufer $i =1, 2$ könne ihren Verkaufsstand gleichzeitig irgendwo au
 \begin{enumerate}[label=\alph*\upshape)]
 	\item Wo positionieren sich die beiden Verkäufer im Nash-Gleichgewicht? (3P)
 		\begin{proof}
-			Das Nash-Gleichgewicht ist $s_1 = s_2 = 0,5$. Alle Kunden haben nämlich den gleichen Abstand zu den beiden Verkäufern, d.h. beide Verkäufer erhalten in Erwartung die Hälfte aller Kunden. Angenommen einer der beiden Verkäufer würde abweichen, sagen wir o.B.d.A dies wäre Verkäufer 1 und er weicht nach links ab. Nun würde alle Kunden links davon zu ihm kommen und die Kunden zwischen Verkäufern würden sich in der Mitte aufteilen. Die linke Hälfte zwischen den Verkäufern liegt näher bei Verkäufer 1 und die rechte Hälfte würde zu Verkäufer 2 gehen. Die restlichen Käufer, also die rechts von der Mitte, würde allerdings nun näher bei Verkäufer 2 liegen. Das heißt in Erwartung würde Verkäufer 1 nun weniger als die Hälfte aller Kunden bekommen und durch das Abweichen sich schlechter stellen. Da sowohl Verkäufer, als auch Seite beliebig war, möchte demnach keiner der Beiden von $s_1 = s_2 = 0,5$ abweichen, d.h. es ist Nash-Gleichgewicht.
+			Das Nash-Gleichgewicht ist $s_1 = s_2 = 0,5$. Alle Kunden haben nämlich den gleichen Abstand zu den beiden Verkäufern, d.h. beide Verkäufer erhalten in Erwartung die Hälfte aller Kunden, d.h. $m_1 = m_2 = 0.5$. Angenommen einer der beiden Verkäufer würde abweichen, sagen wir o.B.d.A dies wäre Verkäufer 1 und er weicht nach links ab. Nun würde alle Kunden links davon zu ihm kommen und die Kunden zwischen Verkäufern würden sich in der Mitte aufteilen. Die linke Hälfte zwischen den Verkäufern liegt näher bei Verkäufer 1 und die rechte Hälfte würde zu Verkäufer 2 gehen. Die restlichen Käufer, also die rechts von der Mitte, würde allerdings nun näher bei Verkäufer 2 liegen. Das heißt in Erwartung würde Verkäufer 1 nun weniger als die Hälfte aller Kunden bekommen und durch das Abweichen sich schlechter stellen. Da sowohl Verkäufer, als auch Seite beliebig war, möchte demnach keiner der Beiden von $s_1 = s_2 = 0,5$ abweichen, d.h. dies ist ein Nash-Gleichgewicht.
 		\end{proof}
 	\item Erklären Sie kurz, warum das Strategieprofil $s_1 = s_2 = 0.6$ kein Nash-Gleichgewicht des Spiels darstellt. (5P)
 		\begin{proof}
-			Für ein Nash-Gleichgewicht müsste keiner der Verkäufer abweichen wollen. In der Ausgangssituation haben wieder alle Verkäufer trivialerweise den gleichen Abstand zu beiden Verkäufern, d.h. $m_1 = m_2 = 0.5$ in Erwartung. Falls sich allerdings einer der beiden minimal Richtung Mitte versetzt, z.B. $s_1 = 0.59$, so erhält er Spieler links bis $0.59$ und die Käufer zwischen den beiden würden sich wieder wie bei der a) aufteilen. Spieler eins würde sich also besser stellen 
-			$$ \tilde{m}_1 \geq 0.59 > 0.5 = m_1, $$
-			und $s_1 = s_2 = 0.6$ kann damit kein Nash-Gleichgewicht des Spiels darstellen.
+			Für ein Nash-Gleichgewicht müsste keiner der Verkäufer abweichen wollen. In der Ausgangssituation haben wieder alle Verkäufer trivialerweise den gleichen Abstand zu beiden Verkäufern, d.h. $m_1 = m_2 = 0.5$ in Erwartung. Falls sich allerdings einer der beiden minimal Richtung Mitte versetzt, z.B. $s_1 = 0.59$, so erhält der Spieler links bis $0.59$ alle Käufer und die Käufer zwischen den beiden würden sich wieder wie bei der a) aufteilen. Spieler eins würde sich also besser stellen 
+			$$ \tilde{m}_1 \geq 0.59 > 0.5 = m_1. $$
+			Somit ist $s_1 = s_2 = 0.6$ damit kein Nash-Gleichgewicht des Spiels.
 		\end{proof}
 	\item Wo positionieren sich die beiden Verkäufer im Nash-Gleichgewicht wenn (im Gegensatz zur Aufgabenstellung) 60\% der Strandbesucher genau am linken Ende des Strandes liegen und 40\% genau am rechten Ende? Begründen Sie kurz Ihre Antwort. (6P)
 		\begin{proof}
 			Beide Verkäufer würden sich am linken Ende aufstellen, also $s_1 = s_2 = 0$ und sich wie oben wieder in Erwartung 50\% der Käufer teilen. Wir zeigen zuerst, dass dies ein Nash-Gleichgewicht ist und dann dass es kein weiteres mehr gibt. ~\smallskip
 			
-			 Angenommen ein Spieler würde von $s_1 = s_2 = 0$ abweichen wollen, z.B. Spieler 1 (d.h. $s_1 > 0$). Dann würden die 60\% am linken Rand echt näher bei Verkäufer 2 liegen und nur zu ihm gehen. Da die 40\% am rechten Rand nun echt näher an Verkäufer 1 sind, erhält er diese mit Sicherheit. Dies ist allerdings eine echte Verschlechterung zum ursprünglichen Marktanteil ist, und dies für beide Spieler gilt, ist $s_1 = s_2 = 0$ ein Nash-Gleichgewicht. Angenommen nur einer der Spieler steht am linken Rand, dann steht der andere weiter rechts und erhält  wie oben beschrieben nur die restlichen 40\%. Durch das Verschieben zum linken Rand würde er aber in Erwartung wieder 50\% erhalten. Angenommen beide sind nicht am linken Rand. Dann stehen sie entweder an der gleichen Stelle, d.h. durch Verschieben nach links würde man sich wieder von 50\% auf 60\% verbessern; oder sie stehen nebeneinander, der linke Verkäufer erhält aufgrund der Nähe alle am linken Rand, d.h. 60\% und der rechte die verbleibenden 40\%. Somit würde der rechte Verkäufer wieder zum linken Rand abweichen und sicher verbessern wollen. Somit ist $s_1 = s_2 = 0$ das einzige Nash-Gleichgewicht.
+			 Angenommen ein Spieler würde von $s_1 = s_2 = 0$ abweichen wollen, z.B. Spieler 1 (d.h. $s_1 > 0$). Dann würden die 60\% am linken Rand echt näher bei Verkäufer 2 liegen und nur zu ihm gehen. Da die 40\% am rechten Rand nun echt näher an Verkäufer 1 sind, erhält er diese mit Sicherheit. Dies ist allerdings eine echte Verschlechterung zum ursprünglichen Marktanteil ist, und da dies für beide Spieler gilt, will keiner Abweichen und $s_1 = s_2 = 0$ ist ein Nash-Gleichgewicht. 
+			 
+			 Nehmen wir für den zweiten Teil nun an, dass mindestens einer der beiden nicht am linken Rand steht. Dann stehen sie entweder an der gleichen Stelle und teilen sich 50\% der Käufer, d.h. falls sich einer der beiden nach links verschieben würde, erhält er alle am linken Rand und verbessert sich auf 60\%; oder sie stehen nebeneinander, der linke Verkäufer erhält aufgrund der Nähe alle Käufer am linken Rand, und der Rechte der Beiden die verbleibenden 40\%. Somit würde der rechte Verkäufer wieder zum linken Rand abweichen wollen und sich mindestens auf 50\% (wenn nicht sogar 60\%) verbessern. Somit ist $s_1 = s_2 = 0$ das einzige Nash-Gleichgewicht.
 		\end{proof}
 \end{enumerate}
 
@@ -330,7 +343,7 @@ Betrachten Sie das folgende in Extensivform beschriebene Markteintritts-Spiel mi
 \begin{enumerate}[label=\alph*\upshape)]
 	\item Erklären Sie anhand des Beispiels kurz den Begriff \enquote{dynamisches Spiel}. (3P)
 		\begin{proof}
-			Bei einem dynamischen Spiel wählen die Spiele ihre Aktionen sequentiell, und haben damit die Möglichkeit auf die Aktionen anderer zu reagieren. Spieler 2 sieht, ob Spieler I $In$ oder $Out$ gespielt hat, er kann zwar nicht zwischen $F$ und $A$ unterscheiden, allerdings muss er nicht simultan mit $E$ spielen. D.h. aufgrund der Beobachtbarkeit ob $E$ in den Markt eingetreten ist oder eben nicht, und der dadurch möglichen sequentiellen Entscheidung, also ob er $F$ oder $A$ als Antwort auf $In$ spielen möchte, ist dies ein dynamisches Spiel.
+			Bei einem dynamischen Spiel wählen die Spieler ihre Aktionen sequentiell, und haben damit die Möglichkeit auf die Aktionen anderer zu reagieren. Spieler 2 sieht, ob Spieler I $In$ oder $Out$ gespielt hat, er kann zwar nicht zwischen $F$ und $A$ unterscheiden, allerdings muss er nicht simultan mit $E$ spielen. D.h. aufgrund der Beobachtbarkeit ob $E$ in den Markt eingetreten ist oder eben nicht, und der dadurch möglichen sequentiellen Entscheidung, also ob er $F$ oder $A$ als Antwort auf $In F / IN A$ spielen möchte, ist dies ein dynamisches Spiel.
 		\end{proof} ~\newpage
 		\textit{Beachte:	 Im Gegensatz zu Aufgabe 2 besitzt dieses Spiel zwei Teilspiele:}
 			
@@ -518,8 +531,9 @@ Gegeben ist das folgende statische Spiel in Normalformdarstellung.
 			\end{align*}
 			Einsetzen von $p_R = 1 - p_L$ ergibt
 			$$ 1 \cdot p_L = 1 \cdot (1 - p_L) \iff p_L = 0.5 $$
-			Das einzige Nash-Gleichgewicht in diesem Spiel ist in gemischten Strategie bei der Wahrscheinlichkeitsverteilung (\textit{hier solltest du auf die Schreibweise deiner Vorlesung achten, das macht jeder Prof. anders})
+			Das einzige Nash-Gleichgewicht in diesem Spiel ist damit in gemischten Strategie bei der Wahrscheinlichkeitsverteilung 
 			$$ \left( (0.5, 0.5), (0.5, 0.5) \right) $$
+			\textit{Achtung: hier solltest du auf die Schreibweise deiner Vorlesung achten, das macht jeder Prof. anders. Manchmal wollen sie $p = 0.5, q= 0.5$, manchmal $(p, q) = (0.5,0.5)$ oder wie ich oben $( (p, 1-p), (q, 1-q) )$.}
 		\end{proof}
 	\item Ein Freund sagt zu Spieler 1: \textit{\enquote{So wie Spieler 2 im Nash-Gleichgewicht spielt, bist Du indifferent zwischen $L$ und $R$. Also ist es egal, ob Du randomisierst oder eine der Aktionen $L$ bzw. $R$ mit Wahrscheinlichkeit 1 spielst.}} Erläutern Sie kurz, ob Sie der Aussage des Freundes zustimmen oder nicht. (5P)
 		\begin{proof}
@@ -990,7 +1004,7 @@ edge from parent node [right]{$[1 - \pi]$}
 \end{tikzpicture}
 \end{figure}
 
-			Es stellt sich aber dabei das gleiche Ergebnis wie in der c) ein. Dies sollte nicht verwundern, da die Strategien von Empfänger dominant sind, also unabhängig von möglichen Informationen statt fanden - sie wird sich immer für $U$ bzw. $D$ entscheiden auch mit perfekten Informationen - und somit kann Sender ihre Entscheidung genau so treffen.
+			Es stellt sich aber dabei das gleiche Ergebnis ein wie in der c). Dies sollte dich nicht wundern, da die Strategien von Empfänger dominant sind, also unabhängig von möglichen Informationen statt fanden - sie wird sich immer für $U$ bzw. $D$ entscheiden mit oder ohne perfekten Informationen - und somit kann Sender ihre Entscheidung auf Grundlage dessen auch unabhängig vom Informationsstand treffen.
 		\end{proof}
 \end{enumerate}
 
